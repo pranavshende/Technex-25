@@ -1,0 +1,120 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farmer Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      width: 50%;
+      margin: 50px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Farmer Application Form</h2>
+    <form action="/apply" method="POST" id="application-form">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" name="phone" required>
+
+      <label for="fieldSize">Field Size (in acres):</label>
+      <input type="number" id="fieldSize" name="fieldSize" required>
+
+      <label for="cropType">Type of Crop:</label>
+      <select id="cropType" name="cropType" required>
+        <option value="Wheat">Wheat</option>
+        <option value="Rice">Rice</option>
+        <option value="Corn">Corn</option>
+        <option value="Cotton">Cotton</option>
+        <option value="Soybean">Soybean</option>
+        <!-- Add more crop types as needed -->
+      </select>
+
+      <label for="additionalInfo">Additional Information:</label>
+      <textarea id="additionalInfo" name="additionalInfo"></textarea>
+
+      
+      <button type="submit">Submit Application</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('application-form').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        fieldSize: document.getElementById('fieldSize').value,
+        cropType: document.getElementById('cropType').value,
+        additionalInfo: document.getElementById('additionalInfo').value,
+    };
+
+    try {
+        const response = await fetch('/apply', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            alert('Application submitted successfully!');
+            window.location.href = '/dashboard';
+        } else {
+            const error = await response.text();
+            alert('Error submitting application: ' + error);
+        }
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+});
+
+</script>
+
+</body>
+</html>

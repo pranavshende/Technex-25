@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Farming Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #85c788, #e6f7df);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 1.5rem;
+        }
+
+        /* Glassmorphism Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 10px; /* Ensures a small gap from screen edges */
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #2e7d32;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #ccc;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #388e3c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            button {
+                padding: 12px;
+            }
+        }
+
+        /* Footer Decoration */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Contract Farming Application</h1>
+        <form id="contract-farming-form" method="POST" action="/submit-contract-farming">
+            <!-- Firm Details -->
+            <h2>Firm Details</h2>
+            <div class="form-group">
+                <label for="firm-name">Firm Name</label>
+                <input type="text" id="firm-name" name="firmName" placeholder="Enter firm name" required>
+            </div>
+            <div class="form-group">
+                <label for="firm-type">Type of Firm</label>
+                <select id="firm-type" name="firmType" required>
+                    <option value="">Select</option>
+                    <option value="Private Limited">Private Limited</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Cooperative">Cooperative</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="registration-number">Firm Registration Number</label>
+                <input type="text" id="registration-number" name="registrationNumber" placeholder="Enter registration number" required>
+            </div>
+            <div class="form-group">
+                <label for="date-of-establishment">Date of Establishment</label>
+                <input type="date" id="date-of-establishment" name="dateOfEstablishment" required>
+            </div>
+
+            <!-- Contact Details -->
+            <h2>Contact Details</h2>
+            <div class="form-group">
+                <label for="contact-person">Contact Person's Name</label>
+                <input type="text" id="contact-person" name="contactPerson" placeholder="Enter contact person's name" required>
+            </div>
+            <div class="form-group">
+                <label for="designation">Designation</label>
+                <input type="text" id="designation" name="designation" placeholder="Enter designation" required>
+            </div>
+            <div class="form-group">
+                <label for="contact-email">Email</label>
+                <input type="email" id="contact-email" name="contactEmail" placeholder="Enter email address" required>
+            </div>
+            <div class="form-group">
+                <label for="contact-phone">Phone Number</label>
+                <input type="tel" id="contact-phone" name="contactPhone" placeholder="Enter phone number" required>
+            </div>
+
+            <!-- Business Details -->
+            <h2>Business Details</h2>
+            <div class="form-group">
+                <label for="core-business">Core Business Activities</label>
+                <textarea id="core-business" name="coreBusiness" rows="4" placeholder="Describe your core business activities" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="annual-turnover">Annual Turnover (in INR)</label>
+                <input type="number" id="annual-turnover" name="annualTurnover" placeholder="Enter annual turnover" required>
+            </div>
+            <div class="form-group">
+                <label for="certifications">Certifications (ISO, HACCP, etc.)</label>
+                <input type="text" id="certifications" name="certifications" placeholder="Enter certifications">
+            </div>
+
+            <!-- Upload Section -->
+            <h2>Upload Supporting Documents</h2>
+            <div class="form-group">
+                <label for="supporting-documents">Upload Documents</label>
+                <input type="file" id="supporting-documents" name="supportingDocuments" accept=".pdf,.docx,.doc" multiple>
+            </div>
+
+            <!-- Submission -->
+            <div class="form-group">
+                <button type="submit">Submit Application</button>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Farming Agreement</title>
+   
+    <style>body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    
+    label, input, textarea, button {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="language-selector">
+            <label for="language">Select Language:</label>
+            <select id="language" onchange="switchLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+            </select>
+        </div>
+
+        <h1 data-lang="en">Contract Farming Agreement</h1>
+        <h1 data-lang="hi" style="display: none;">ठेका खेती समझौता</h1>
+
+        <form id="agreement-form" method="POST" action="/submit" enctype="application/x-www-form-urlencoded">
+            <label for="farmerName" data-lang="en">Farmer's Full Name:</label>
+            <input type="text" id="farmerName" name="farmerName" required><br>
+
+            <label for="farmerAddress" data-lang="en">Farmer's Address:</label>
+            <input type="text" id="farmerAddress" name="farmerAddress" required><br>
+
+            <label for="farmerAadhar" data-lang="en">Farmer's Aadhar/ID Number:</label>
+            <input type="text" id="farmerAadhar" name="farmerAadhar" required><br>
+
+            <label for="farmerBankAccount" data-lang="en">Farmer's Bank Account Details:</label>
+            <input type="text" id="farmerBankAccount" name="farmerBankAccount" required><br>
+
+            <label for="buyerName" data-lang="en">Buyer's Full Name:</label>
+            <input type="text" id="buyerName" name="buyerName" required><br>
+
+            <label for="buyerAddress" data-lang="en">Buyer's Address:</label>
+            <input type="text" id="buyerAddress" name="buyerAddress" required><br>
+
+            <label for="startDate" data-lang="en">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required><br>
+
+            <label for="endDate" data-lang="en">End Date:</label>
+            <input type="date" id="endDate" name="endDate" required><br>
+
+            <label for="cropType" data-lang="en">Crop Type:</label>
+            <input type="text" id="cropType" name="cropType" required><br>
+
+            <label for="expectedYield" data-lang="en">Expected Yield:</label>
+            <input type="text" id="expectedYield" name="expectedYield" required><br>
+
+            <label for="pricingDetails" data-lang="en">Pricing Details:</label>
+            <textarea id="pricingDetails" name="pricingDetails" required></textarea><br>
+
+            <label data-lang="en">Digital Signature:</label>
+            <canvas id="signature-pad" style="border: 1px solid #ccc; width: 100%; height: 200px;"></canvas>
+            <input type="hidden" id="signature-data" name="signature">
+            <button type="button" onclick="clearSignature()">Clear Signature</button><br><br>
+
+            <button type="submit" onclick="saveSignature(event)">Submit Agreement</button>
+        </form>
+    </div>
+
+    <script>
+        function switchLanguage(language) {
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(element => {
+                if (element.dataset.lang === language) {
+                    element.style.display = 'block';
+                } else {
+                    element.style.display = 'none';
+                }
+            });
+        }
+
+        const canvas = document.getElementById('signature-pad');
+        const context = canvas.getContext('2d');
+        let drawing = false;
+
+        canvas.addEventListener('mousedown', (event) => {
+            drawing = true;
+            context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+            context.beginPath();
+        });
+
+        canvas.addEventListener('mousemove', (event) => {
+            if (drawing) {
+                context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+                context.stroke();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            drawing = false;
+        });
+
+        function clearSignature() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveSignature(event) {
+            event.preventDefault();
+            const signatureData = canvas.toDataURL('image/png');
+            document.getElementById('signature-data').value = signatureData;
+            document.getElementById('agreement-form').submit();
+        }
+    </script>
+</body>
+</html>

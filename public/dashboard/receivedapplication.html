@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Applications</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        /* Application List Container */
+        #applications-list {
+            width: 80%;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        /* Application Item */
+        .application-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .application-item:last-child {
+            border-bottom: none;
+        }
+
+        .application-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .application-item h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .application-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .application-item p strong {
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #applications-list {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Farmer Applications</h1>
+    <div id="applications-list">
+        <!-- Applications will be dynamically inserted here -->
+    </div>
+
+    <script>
+        // Fetch applications data from the server
+        fetch('/api/applications')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(applications => {
+        console.log(applications);  // Log fetched data
+        const applicationsList = document.getElementById('applications-list');
+        applications.forEach(application => {
+            const applicationItem = document.createElement('div');
+            applicationItem.classList.add('application-item');
+            applicationItem.innerHTML = `
+                <h3>${application.name}</h3>
+                <p><strong>Email:</strong> ${application.email}</p>
+                <p><strong>Phone:</strong> ${application.phone}</p>
+                <p><strong>Field Size:</strong> ${application.fieldSize} acres</p>
+                <p><strong>Crop Type:</strong> ${application.cropType}</p>
+                <p><strong>Additional Info:</strong> ${application.additionalInfo || 'N/A'}</p>
+                <p><strong>Application Date:</strong> ${new Date(application.createdAt).toLocaleDateString()}</p>
+            `;
+            applicationsList.appendChild(applicationItem);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching applications:', error);
+        document.getElementById('applications-list').innerHTML = '<p>Error loading applications.</p>';
+    });
+
+    </script>
+</body>
+</html>

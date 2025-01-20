@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmVision Profile</title>
+    <style>
+        /* Reset basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: black; /* Change text color to black */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar h1, 
+.navbar nav a, 
+.profile-header h1, 
+.profile-header p, 
+.profile-section h2, 
+.profile-field strong, 
+.profile-field span {
+    color: black; /* Set all text elements to black */
+}
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 128, 0, 0.9); /* Greenish agricultural tone */
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar h1 {
+            font-size: 1.8rem;
+        }
+
+        .navbar nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1rem;
+        }
+
+        .navbar nav a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+          
+            margin: 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Add shadow here */
+            overflow: hidden;
+            padding: 30px;
+         
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow to profile header */
+            border-radius: 8px; /* Optional: add border-radius to make it look smoother */
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .profile-header p {
+            color: #000000;
+            font-size: 1rem;
+        }
+
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* Makes the image circular */
+            margin-bottom: 20px;
+            object-fit: cover; /* Ensures the image fits within the circle */
+        }
+
+        .profile-section {
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow to profile sections */
+            padding: 15px;
+            border-radius: 8px; /* Optional: adds smooth corners */
+        }
+
+        .profile-section h2 {
+            font-size: 1.6rem;
+            color: #121212;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e7e7e7;
+            padding-bottom: 5px;
+        }
+
+        .profile-field {
+            font-size: 1.1rem;
+            color: #000000;
+            margin-bottom: 12px;
+        }
+
+        .profile-field strong {
+            color: #090909;
+            width: 200px;
+            display: inline-block;
+        }
+
+        .profile-field span {
+            color: #000000;
+        }
+
+        /* Add responsive design */
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 20px;
+            }
+
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .profile-section h2 {
+                font-size: 1.4rem;
+            }
+
+            .profile-field strong {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>FarmVision</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="/">Logout</a>
+        </nav>
+    </div>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="background.jpg" alt="Profile Photo"> <!-- Add profile photo -->
+            <h1>Farmers Profile</h1>
+            <p>Your details and information</p>
+        </div>
+        <div id="profile-content">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch the logged-in email from the backend
+        async function getLoggedInEmail() {
+            try {
+                const response = await fetch('/api/logged-in-email');
+                const data = await response.json();
+                return data.email; // Return the logged-in email
+            } catch (error) {
+                console.error('Error fetching logged-in email:', error);
+                return null;
+            }
+        }
+
+        // Function to fetch profile data based on logged-in email
+        async function fetchFarmerRegistrationByEmail(email) {
+    try {
+        // Declare and initialize farmerRegistration
+        const farmerRegistration = await farmerRegistration.findOne({ email });
+
+        if (!farmerRegistration) {
+            console.log('No farmer registration found for email:', email);
+            return null;
+        }
+
+        // Use farmerRegistration here
+        const profileHTML = `
+            <div class="profile-section">
+                <h2>Personal Details</h2>
+                <div class="profile-field"><strong>Full Name:</strong> <span>${farmerRegistration.fullName}</span></div>
+                <div class="profile-field"><strong>Email:</strong> <span>${farmerRegistration.email}</span></div>
+                <div class="profile-field"><strong>Phone Number:</strong> <span>${farmerRegistration.phoneNumber}</span></div>
+                <div class="profile-field"><strong>Residential Address:</strong> <span>${farmerRegistration.residentialAddress}</span></div>
+            </div>
+            <div class="profile-section">
+                <h2>Farm Details</h2>
+                <div class="profile-field"><strong>Farm Location:</strong> <span>${farmerRegistration.farmLocation}</span></div>
+                <div class="profile-field"><strong>Farm Size:</strong> <span>${farmerRegistration.farmSize}</span></div>
+                <div class="profile-field"><strong>Soil Type:</strong> <span>${farmerRegistration.soilType}</span></div>
+                <div class="profile-field"><strong>Irrigation Facilities:</strong> <span>${farmerRegistration.irrigationFacilities}</span></div>
+                <div class="profile-field"><strong>Crops Grown:</strong> <span>${farmerRegistration.cropsGrown.join(', ')}</span></div>
+                <div class="profile-field"><strong>Yield History:</strong> <span>${farmerRegistration.yieldHistory}</span></div>
+            </div>
+            <div class="profile-section">
+                <h2>Equipment and Storage</h2>
+                <div class="profile-field"><strong>Equipment:</strong> <span>${farmerRegistration.equipment.join(', ')}</span></div>
+                <div class="profile-field"><strong>Storage Facilities:</strong> <span>${farmerRegistration.storageFacilities}</span></div>
+            </div>
+        `;
+
+        document.getElementById('profile-content').innerHTML = profileHTML;
+    } catch (error) {
+        console.error("Error loading profile:", error);
+        document.getElementById('profile-content').innerHTML = "<p>Error loading profile data.</p>";
+    }
+}
+
+
+
+
+
+        // Main function to fetch email and then load the profile
+        async function loadProfile() {
+            const email = await getLoggedInEmail();
+            if (email) {
+                fetchFarmerRegistrationByEmail(email);
+            } else {
+                document.getElementById('profile-content').innerHTML = "<p>Please log in to view your profile.</p>";
+            }
+        }
+
+        loadProfile(); // Call the function when the page loads
+    </script>
+</body>
+</html>

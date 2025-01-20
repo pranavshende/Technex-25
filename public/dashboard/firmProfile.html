@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmVision Profile</title>
+    <style>
+        /* Reset basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: black; /* Change text color to black */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar h1, 
+.navbar nav a, 
+.profile-header h1, 
+.profile-header p, 
+.profile-section h2, 
+.profile-field strong, 
+.profile-field span {
+    color: black; /* Set all text elements to black */
+}
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 128, 0, 0.9); /* Greenish agricultural tone */
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar h1 {
+            font-size: 1.8rem;
+        }
+
+        .navbar nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1rem;
+        }
+
+        .navbar nav a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+          
+            margin: 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Add shadow here */
+            overflow: hidden;
+            padding: 30px;
+         
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow to profile header */
+            border-radius: 8px; /* Optional: add border-radius to make it look smoother */
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .profile-header p {
+            color: #000000;
+            font-size: 1rem;
+        }
+
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* Makes the image circular */
+            margin-bottom: 20px;
+            object-fit: cover; /* Ensures the image fits within the circle */
+        }
+
+        .profile-section {
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow to profile sections */
+            padding: 15px;
+            border-radius: 8px; /* Optional: adds smooth corners */
+        }
+
+        .profile-section h2 {
+            font-size: 1.6rem;
+            color: #121212;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e7e7e7;
+            padding-bottom: 5px;
+        }
+
+        .profile-field {
+            font-size: 1.1rem;
+            color: #000000;
+            margin-bottom: 12px;
+        }
+
+        .profile-field strong {
+            color: #090909;
+            width: 200px;
+            display: inline-block;
+        }
+
+        .profile-field span {
+            color: #000000;
+        }
+        .create-requirement {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#createRequirementBtn {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+}
+
+#createRequirementBtn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+   /* Add a new style for the marketplace button */
+   #marketplaceBtn {
+            background-color: #007bff; /* Blue background */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+
+        #marketplaceBtn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Add responsive design */
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 20px;
+            }
+
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .profile-section h2 {
+                font-size: 1.4rem;
+            }
+
+            .profile-field strong {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>FarmVision</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="/">Logout</a>
+        </nav>
+    </div>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="background.jpg" alt="Profile Photo"> <!-- Add profile photo -->
+            <h1>Firm Profile</h1>
+            <p>Your company details and information</p>
+        </div>
+        <div id="profile-content">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+    
+    <div class="create-requirement">
+        <button id="createRequirementBtn">Create Requirement</button>
+    </div>
+    <div class="create-requirement">
+        <button id="marketplaceBtn" onclick="window.location.href='/marketplace'">Go to Marketplace</button>
+    </div>
+    <div class="create-requirement">
+        <button id="marketplaceBtn" onclick="window.location.href='/applications'">Go to received application</button>
+    </div>
+    <script>
+        // Function to fetch the logged-in email from the backend
+        async function getLoggedInEmail() {
+            try {
+                const response = await fetch('/api/logged-in-email');
+                const data = await response.json();
+                return data.email; // Return the logged-in email
+            } catch (error) {
+                console.error('Error fetching logged-in email:', error);
+                return null;
+            }
+        }
+
+        // Function to fetch profile data based on logged-in email
+        async function fetchRegistrationByEmail(email) {
+            try {
+                const response = await fetch(`/api/fetch-registration?email=${encodeURIComponent(email)}`);
+                const registration = await response.json();
+
+                if (!registration || registration.error) {
+                    document.getElementById('profile-content').innerHTML = `<p>${registration.error || "Profile not found."}</p>`;
+                    return;
+                }
+
+                // Dynamically generate the profile HTML
+                const profileHTML = `
+                    <div class="profile-section">
+                        <h2>Firm Details</h2>
+                        <div class="profile-field"><strong>Firm Name:</strong> <span>${registration.firmName}</span></div>
+                        <div class="profile-field"><strong>Firm Type:</strong> <span>${registration.firmType}</span></div>
+                        <div class="profile-field"><strong>Registration Number:</strong> <span>${registration.registrationNumber}</span></div>
+                        <div class="profile-field"><strong>Date of Establishment:</strong> <span>${registration.dateOfEstablishment}</span></div>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Contact Details</h2>
+                        <div class="profile-field"><strong>Contact Person:</strong> <span>${registration.contactPerson}</span></div>
+                        <div class="profile-field"><strong>Designation:</strong> <span>${registration.designation}</span></div>
+                        <div class="profile-field"><strong>Email:</strong> <span>${registration.contactEmail}</span></div>
+                        <div class="profile-field"><strong>Phone:</strong> <span>${registration.contactPhone}</span></div>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Business Details</h2>
+                        <div class="profile-field"><strong>Core Business:</strong> <span>${registration.coreBusiness}</span></div>
+                        <div class="profile-field"><strong>Annual Turnover:</strong> <span>${registration.annualTurnover}</span></div>
+                        <div class="profile-field"><strong>Certifications:</strong> <span>${registration.certifications}</span></div>
+                    </div>
+                `;
+
+                document.getElementById('profile-content').innerHTML = profileHTML;
+            } catch (error) {
+                console.error("Error loading profile:", error);
+                document.getElementById('profile-content').innerHTML = "<p>Error loading profile data.</p>";
+            }
+        }
+        
+
+        document.getElementById('createRequirementBtn').addEventListener('click', function() {
+    // Example action: Display an alert
+    window.location.href = '/requirementform';
+    
+    
+    // Alternatively, redirect to another page
+    // window.location.href = '/create-requirement';
+});
+
+
+        // Main function to fetch email and then load the profile
+        async function loadProfile() {
+            const email = await getLoggedInEmail();
+            if (email) {
+                fetchRegistrationByEmail(email);
+            } else {
+                document.getElementById('profile-content').innerHTML = "<p>Please log in to view your profile.</p>";
+            }
+        }
+
+        loadProfile(); // Call the function when the page loads
+    </script>
+</body>
+</html>

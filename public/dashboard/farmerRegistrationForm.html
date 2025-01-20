@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #85c788, #e6f7df);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 1.5rem;
+        }
+
+        /* Glassmorphism Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 10px; /* Ensures a small gap from screen edges */
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #2e7d32;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #ccc;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #388e3c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            button {
+                padding: 12px;
+            }
+        }
+
+        /* Footer Decoration */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Farmer Registration Form</h1>
+        <form id="farmer-registration-form" method="POST" action="/submit-farmer-registration">
+            <!-- Personal Information -->
+            <h2>Personal Information</h2>
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="fullName" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="tel" id="phone-number" name="phoneNumber" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <label for="residential-address">Residential Address</label>
+                <textarea id="residential-address" name="residentialAddress" rows="3" placeholder="Enter your residential address" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="farm-location">Farm Location</label>
+                <textarea id="farm-location" name="farmLocation" rows="3" placeholder="Enter your farm location (if different)" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="id-proof">ID Proof</label>
+                <input type="text" id="id-proof" name="idProof" placeholder="Enter your ID (e.g., Aadhaar, Social Security)" required>
+            </div>
+
+            <!-- Farm Details -->
+            <h2>Farm Details</h2>
+            <div class="form-group">
+                <label for="farm-size">Farm Size (acres/hectares)</label>
+                <input type="number" id="farm-size" name="farmSize" placeholder="Enter your farm size" required>
+            </div>
+            <div class="form-group">
+                <label for="soil-type">Soil Type</label>
+                <input type="text" id="soil-type" name="soilType" placeholder="Enter soil type (e.g., loamy, clay)" required>
+            </div>
+            <div class="form-group">
+                <label for="irrigation">Irrigation Facilities</label>
+                <input type="text" id="irrigation" name="irrigationFacilities" placeholder="Describe irrigation facilities (e.g., drip, canal)" required>
+            </div>
+
+            <!-- Cropping Information -->
+            <h2>Cropping Information</h2>
+            <div class="form-group">
+                <label for="crops-grown">Crops Grown</label>
+                <textarea id="crops-grown" name="cropsGrown" rows="3" placeholder="List primary crops cultivated" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="yield-history">Yield History</label>
+                <textarea id="yield-history" name="yieldHistory" rows="3" placeholder="Describe previous yields (e.g., quintals per acre)" required></textarea>
+            </div>
+
+            <!-- Equipment and Resources -->
+            <h2>Equipment and Resources</h2>
+            <div class="form-group">
+                <label for="equipment">Farming Equipment</label>
+                <textarea id="equipment" name="equipment" rows="3" placeholder="List available tools and machinery"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="storage">Storage Facilities</label>
+                <textarea id="storage" name="storageFacilities" rows="3" placeholder="Describe storage or warehouses"></textarea>
+            </div>
+
+            <!-- Submission -->
+            <div class="form-group">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

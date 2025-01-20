@@ -1,0 +1,130 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .search-bar {
+            margin: 20px;
+            text-align: center;
+        }
+        .search-bar input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .contract-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .contract-item {
+            background-color: white;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            box-sizing: border-box;
+        }
+        .contract-item h3 {
+            margin-top: 0;
+        }
+        .apply-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .apply-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>FarmVision Marketplace</h1>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search contracts by crop type..." oninput="filterContracts()">
+    </div>
+
+    <div class="contract-list" id="contractList">
+        <!-- Contract items will be dynamically inserted here -->
+    </div>
+
+    <script>
+        // Function to fetch contract data from the API
+        async function fetchContracts() {
+            try {
+                const response = await fetch('/api/contracts');
+                const contracts = await response.json();
+                displayContracts(contracts);
+            } catch (error) {
+                console.error('Error fetching contracts:', error);
+            }
+        }
+
+        // Function to display contract data on the page
+        function displayContracts(contracts) {
+            const contractList = document.getElementById('contractList');
+            contractList.innerHTML = ''; // Clear existing contracts
+
+            contracts.forEach(contract => {
+                const contractItem = document.createElement('div');
+                contractItem.classList.add('contract-item');
+                contractItem.innerHTML = `
+                    <h3>${contract.cropType}</h3>
+                    <p><strong>Firm Name:</strong> ${contract.firmName}</p>
+                    <p><strong>Quality:</strong> ${contract.cropQuality}</p>
+                    <p><strong>Time Period:</strong> ${contract.timePeriod}</p>
+                    <p><strong>Amount:</strong> ${contract.amountOfCrop} tons</p>
+                    <p><strong>Additional Info:</strong> ${contract.additionalInfo || 'N/A'}</p>
+                    <a href="/farmerReq" class="apply-button" target="_blank">Apply</a>
+                `;
+                contractList.appendChild(contractItem);
+            });
+        }
+
+        // Function to filter contracts based on search input
+        function filterContracts() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const contractItems = document.querySelectorAll('.contract-item');
+
+            contractItems.forEach(item => {
+                const cropType = item.querySelector('h3').textContent.toLowerCase();
+                if (cropType.includes(searchInput)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Fetch and display contracts when the page loads
+        window.onload = fetchContracts;
+    </script>
+</body>
+</html>

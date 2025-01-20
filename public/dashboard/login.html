@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmVision - Login</title>
+    <style>
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Style */
+body {
+    font-family: 'Arial', sans-serif;
+ background-image: url('/dashboard/background.jpg');     /* Farming Image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Container */
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 50px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden; /* Hide content outside the container */
+}
+
+/* Title and Subtitle */
+.auth-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #00ff7f;
+}
+
+.auth-subtitle {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-link {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.tab-link.active {
+    border-bottom: 2px solid #00ff7f;
+    font-weight: bold;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+/* Buttons */
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #00ff7f;
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-button:hover {
+    background: #00cc63;
+}
+
+/* Login/Signup Forms Sliding Effect */
+.auth-form-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form {
+    width: 100%;
+    display: none; /* Hide both forms initially */
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Display Login Form when active */
+.auth-form.login.active {
+    display: block;
+}
+
+/* Display Signup Form when active */
+.auth-form.signup.active {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .auth-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .tabs {
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .tab-link {
+        padding: 8px;
+    }
+
+    .form-group input {
+        padding: 8px;
+    }
+
+    .auth-button {
+        padding: 12px;
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="auth-title">Welcome to FarmVision</h1>
+        <p class="auth-subtitle">Please login or signup to continue</p>
+
+        <!-- Tabs for Login and Signup -->
+        <div class="tabs">
+            <button class="tab-link active" id="login-tab">Login</button>
+            <button class="tab-link" id="signup-tab">Signup</button>
+        </div>
+
+        <div class="auth-form-container">
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form login" method="POST">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="auth-button">Login</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="auth-form signup" method="POST">
+                <h2>Signup</h2>
+                <div class="form-group">
+                    <label for="signup-name">Name</label>
+                    <input type="text" id="signup-name" name="name" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password" required placeholder="Enter your password">
+                </div>
+                <div class="form-group">
+                    <label for="user-type">Sign up as:</label>
+                    <select id="user-type">
+                        <option value="farmer">Farmer</option>
+                        <option value="firm">Company</option>
+                    </select>
+                </div>
+                <button type="submit" class="auth-button" id="signup-submit" >Signup</button>
+            </form>
+        </div>
+
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Wait for the DOM content to fully load
+        window.addEventListener('DOMContentLoaded', function () {
+            const loginTab = document.getElementById('login-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const messageElement = document.getElementById('message'); // Ensure this element exists in your HTML
+    
+            // Make sure the login form is visible by default
+            loginForm.classList.add('active');
+    
+            // Tab switching logic
+            loginTab.addEventListener('click', function () {
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
+                this.classList.add('active');
+                signupTab.classList.remove('active');
+            });
+    
+            signupTab.addEventListener('click', function () {
+                signupForm.classList.add('active');
+                loginForm.classList.remove('active');
+                this.classList.add('active');
+                loginTab.classList.remove('active');
+            });
+    
+            // Login form submission
+            loginForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+    
+                fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = '/dashboard'; // Redirect to the dashboard on success
+                        } else {
+                            messageElement.textContent = data.message || 'An unknown error occurred during login.';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        messageElement.textContent = error.message || 'An error occurred during login. Please try again later.';
+                    });
+            });
+    
+            // Signup form submission
+            function showMessage(message, isSuccess = true) {
+                messageElement.textContent = message;
+                messageElement.style.color = isSuccess ? 'green' : 'red';
+            }
+    
+            function validateForm(name, email, password) {
+                if (!name || !email || !password) {
+                    showMessage('All fields are required.', false);
+                    return false;
+                }
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailPattern.test(email)) {
+                    showMessage('Please enter a valid email address.', false);
+                    return false;
+                }
+                return true;
+            }
+    
+            signupForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+    
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const role = document.getElementById('user-type').value;
+    
+                if (!validateForm(name, email, password)) return;
+    
+                const submitButton = document.getElementById('signup-submit');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Signing up...';
+    
+                fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, role }),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => {
+                                throw new Error(data.message || 'Network response was not ok. Please try again later.');
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            showMessage('Signup successful! Redirecting...', true);
+                            if (role === 'firm') {
+                                window.location.href = '/registrationForm';
+                            } else if (role === 'farmer') {
+                                window.location.href = '/farmerRegistrationForm';
+                            } else {
+                                window.location.href = '/';
+                            }
+                        } else {
+                            showMessage(data.message || 'An unknown error occurred during signup.', false);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showMessage(error.message || 'An error occurred during signup. Please try again later.', false);
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Sign Up';
+                    });
+            });
+        });
+    </script>
+    
+</body>
+</html>
