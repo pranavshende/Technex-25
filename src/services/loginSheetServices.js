@@ -1,10 +1,28 @@
 const mongoose = require('mongoose');
 
-// Connect to MongoDB (make sure you have MongoDB running locally or use a cloud service like MongoDB Atlas)
+// Connect to MongoDB (ensure MongoDB is running locally or use MongoDB Atlas)
 mongoose.connect('mongodb://localhost:27017/contract_farming', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 
-// Define the schema for registrations and users
+// Define schemas
+const farmerRegistrationSchema = new mongoose.Schema({
+    fullName: String,
+    phoneNumber: String,
+    email: String,
+    residentialAddress: String,
+    farmLocation: String,
+    idProof: String,
+    farmSize: String,
+    soilType: String,
+    irrigationFacilities: String,
+    cropsGrown: String,
+    yieldHistory: String,
+    equipment: String,
+    storageFacilities: String,
+});
+
 const registrationSchema = new mongoose.Schema({
     firmName: String,
     firmType: String,
@@ -26,7 +44,8 @@ const userSchema = new mongoose.Schema({
     role: String,
 });
 
-// Create models for the schemas
+// Create models
+const FarmerRegistration = mongoose.model('FarmerRegistration', farmerRegistrationSchema);
 const Registration = mongoose.model('Registration', registrationSchema);
 const User = mongoose.model('User', userSchema);
 
@@ -65,7 +84,9 @@ async function addRegistrationToMongoDB(firmName, firmType, registrationNumber, 
     }
 }
 
-async function addFarmersRegistrationToMongoDB( fullName,
+// Add farmer registration to MongoDB
+async function addFarmersRegistrationToMongoDB(
+    fullName,
     phoneNumber,
     email,
     residentialAddress,
@@ -77,8 +98,9 @@ async function addFarmersRegistrationToMongoDB( fullName,
     cropsGrown,
     yieldHistory,
     equipment,
-    storageFacilities) {
-    const newRegistration = new farmerRegistration({
+    storageFacilities
+) {
+    const newRegistration = new FarmerRegistration({
         fullName,
         phoneNumber,
         email,
@@ -96,18 +118,17 @@ async function addFarmersRegistrationToMongoDB( fullName,
 
     try {
         await newRegistration.save();
-        console.log('Registration added to MongoDB:', newRegistration);
+        console.log('Farmer registration added to MongoDB:', newRegistration);
     } catch (error) {
-        console.error('Error adding registration to MongoDB:', error);
+        console.error('Error adding farmer registration to MongoDB:', error);
     }
 }
-
 
 // Fetch registration by email
 async function fetchRegistrationByEmail(email) {
     try {
         const registration = await Registration.findOne({ contactEmail: email });
-        
+
         if (!registration) {
             console.log('No registration found for email:', email);
             return null;
@@ -119,9 +140,12 @@ async function fetchRegistrationByEmail(email) {
         return null;
     }
 }
+
+// Fetch farmer registration by email
 async function fetchFarmerRegistrationByEmail(email) {
+    console.log('Function called with email:', email); // Debug email input
     try {
-        const farmerRegistration = await farmerRegistration.findOne({ email });
+        const farmerRegistration = await FarmerRegistration.findOne({ email });
 
         if (!farmerRegistration) {
             console.log('No farmer registration found for email:', email);
@@ -135,6 +159,7 @@ async function fetchFarmerRegistrationByEmail(email) {
         return null;
     }
 }
+
 
 // Add user to MongoDB
 async function addToMongoDB(name, email, password, role) {

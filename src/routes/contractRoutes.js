@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Contract = require('../models/contract');
+const Company = require('../models/company');
+
+
 
 router.post('/contracts', async (req, res) => {
     try {

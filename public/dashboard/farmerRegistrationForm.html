@@ -11,53 +11,53 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #85c788, #e6f7df);
-            color: #333;
+            background: linear-gradient(to bottom, #042306, #667d5f);
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
-
+    
         h1, h2 {
             text-align: center;
-            color: #2e7d32;
+            color: #ffffff;
         }
-
+    
         h1 {
             margin-bottom: 20px;
             font-size: 2rem;
         }
-
+    
         h2 {
             margin-top: 30px;
             font-size: 1.5rem;
         }
-
+    
         /* Glassmorphism Container */
         .form-container {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(24, 23, 23, 0.1);
             border-radius: 10px;
             padding: 30px;
             max-width: 900px;
             width: 100%;
             margin: 0 10px; /* Ensures a small gap from screen edges */
         }
-
+    
         /* Form Styling */
         .form-group {
             margin-bottom: 20px;
         }
-
+    
         label {
             font-weight: 600;
             display: block;
             margin-bottom: 8px;
-            color: #2e7d32;
+            color: #ffffff;
         }
-
+    
         input, select, textarea, button {
             width: 100%;
             padding: 10px;
@@ -67,43 +67,38 @@
             box-sizing: border-box;
             font-size: 1rem;
         }
-
-        input, select, textarea {
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid #ccc;
+    
+        input, select, textarea  {
+            background: #ffffff;  /* Changed to black */
+            color: rgb(0, 0, 0);  /* Text color set to white for visibility */
+            border: 1px solid #ffffff; /* Light border for better contrast */
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
+    
         textarea {
             resize: none;
         }
-
+    
         button {
-            background-color: #4CAF50;
+            background-color: #053207;
             color: white;
             font-weight: 600;
             cursor: pointer;
             border: none;
         }
-
+    
         button:hover {
-            background-color: #388e3c;
+            background-color: #041d05;
         }
-
+    
         /* Responsive Design */
         @media (max-width: 768px) {
             button {
                 padding: 12px;
             }
         }
-
-        /* Footer Decoration */
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #2e7d32;
-        }
     </style>
+    
 </head>
 <body>
     <div class="form-container">
@@ -125,37 +120,97 @@
             </div>
             <div class="form-group">
                 <label for="residential-address">Residential Address</label>
-                <textarea id="residential-address" name="residentialAddress" rows="3" placeholder="Enter your residential address" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="farm-location">Farm Location</label>
                 <textarea id="farm-location" name="farmLocation" rows="3" placeholder="Enter your farm location (if different)" required></textarea>
             </div>
             <div class="form-group">
+                <label for="farm-location">Farm Location</label>
+                <select id="farm-location" name="residentialAddress" required>
+                    <option value="">Select your residential address</option>
+                    <option value="Nagpur">Nagpur</option>
+                    <option value="Kamptee">Kamptee</option>
+                    <option value="Wardha">Wardha</option>
+                    <option value="Bhandara">Bhandara</option>
+                    <option value="Ramtek">Ramtek</option>
+                    <option value="Kalmeshwar">Kalmeshwar</option>
+                    <option value="Umred">Umred</option>
+                    <option value="Narkhed">Narkhed</option>
+                    <option value="Saoner">Saoner</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="id-proof">ID Proof</label>
-                <input type="text" id="id-proof" name="idProof" placeholder="Enter your ID (e.g., Aadhaar, Social Security)" required>
+                <input type="text" id="id-proof" name="idProof" placeholder="Enter your Aadhaar ID" required>
             </div>
 
             <!-- Farm Details -->
             <h2>Farm Details</h2>
             <div class="form-group">
-                <label for="farm-size">Farm Size (acres/hectares)</label>
+                <label for="farm-size">Farm Size (Acres)</label>
                 <input type="number" id="farm-size" name="farmSize" placeholder="Enter your farm size" required>
             </div>
             <div class="form-group">
                 <label for="soil-type">Soil Type</label>
-                <input type="text" id="soil-type" name="soilType" placeholder="Enter soil type (e.g., loamy, clay)" required>
+                <select id="soil-type" name="soilType" required>
+                    <option value="">Select soil type</option>
+                    <option value="Loamy">Loamy</option>
+                    <option value="Clay">Clay</option>
+                    <option value="Sandy">Sandy</option>
+                    <option value="Saline">Saline</option>
+                    <option value="Peaty">Peaty</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="irrigation">Irrigation Facilities</label>
-                <input type="text" id="irrigation" name="irrigationFacilities" placeholder="Describe irrigation facilities (e.g., drip, canal)" required>
+                <select id="irrigation" name="irrigationFacilities" required>
+                    <option value="">Select irrigation facility</option>
+                    <option value="Drip">Drip</option>
+                    <option value="Canal">Canal</option>
+                    <option value="Sprinkler">Sprinkler</option>
+                    <option value="Borewell">Borewell</option>
+                    <option value="Rainfed">Rainfed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="farm-type">Farm Type</label>
+                <select id="farm-type" name="farmType" required>
+                    <option value="">Select Farm Type</option>
+                    <option value="Organic">Organic</option>
+                    <option value="Conventional">Conventional</option>
+                    <option value="Integrated">Integrated</option>
+                    <option value="Agroforestry">Agroforestry</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="harvest-season">Harvest Season</label>
+                <select id="harvest-season" name="harvestSeason" required>
+                    <option value="">Select Harvest Season</option>
+                    <option value="Winter">Winter</option>
+                    <option value="Summer">Summer</option>
+                    <option value="Monsoon">Monsoon</option>
+                </select>
             </div>
 
             <!-- Cropping Information -->
             <h2>Cropping Information</h2>
             <div class="form-group">
                 <label for="crops-grown">Crops Grown</label>
-                <textarea id="crops-grown" name="cropsGrown" rows="3" placeholder="List primary crops cultivated" required></textarea>
+                <select id="crops-grown" name="cropsGrown" required>
+                    <option value="">Select the crops grown</option>
+                    <option value="Rice">Rice</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Sugarcane">Sugarcane</option>
+                    <option value="Cotton">Cotton</option>
+                    <option value="Soybean">Soybean</option>
+                    <option value="Maize">Maize</option>
+                    <option value="Groundnut">Groundnut</option>
+                    <option value="Barley">Barley</option>
+                    <option value="Tomato">Tomato</option>
+                    <option value="Onion">Onion</option>
+                    <option value="Chili">Chili</option>
+                    <option value="Potato">Potato</option>
+                    <option value="Mustard">Mustard</option>
+                    <option value="Pulses">Pulses</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="yield-history">Yield History</label>
@@ -172,7 +227,10 @@
                 <label for="storage">Storage Facilities</label>
                 <textarea id="storage" name="storageFacilities" rows="3" placeholder="Describe storage or warehouses"></textarea>
             </div>
-
+            <div class="form-group">
+                <label for="documents">Upload Documents</label>
+                <input type="file" id="documents" name="documents" accept=".pdf,.doc,.docx,.jpg,.png" multiple>
+            </div>
             <!-- Submission -->
             <div class="form-group">
                 <button type="submit">Register</button>

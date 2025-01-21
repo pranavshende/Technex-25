@@ -1,120 +1,184 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Farmer Application</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-    .container {
-      width: 50%;
-      margin: 50px auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #218838;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Farmer Application Form</h2>
-    <form action="/apply" method="POST" id="application-form">
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="email">Email Address:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="phone">Phone Number:</label>
-      <input type="text" id="phone" name="phone" required>
-
-      <label for="fieldSize">Field Size (in acres):</label>
-      <input type="number" id="fieldSize" name="fieldSize" required>
-
-      <label for="cropType">Type of Crop:</label>
-      <select id="cropType" name="cropType" required>
-        <option value="Wheat">Wheat</option>
-        <option value="Rice">Rice</option>
-        <option value="Corn">Corn</option>
-        <option value="Cotton">Cotton</option>
-        <option value="Soybean">Soybean</option>
-        <!-- Add more crop types as needed -->
-      </select>
-
-      <label for="additionalInfo">Additional Information:</label>
-      <textarea id="additionalInfo" name="additionalInfo"></textarea>
-
-      
-      <button type="submit">Submit Application</button>
-    </form>
-  </div>
-  <script>
-    document.getElementById('application-form').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        fieldSize: document.getElementById('fieldSize').value,
-        cropType: document.getElementById('cropType').value,
-        additionalInfo: document.getElementById('additionalInfo').value,
-    };
-
-    try {
-        const response = await fetch('/apply', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-            alert('Application submitted successfully!');
-            window.location.href = '/dashboard';
-        } else {
-            const error = await response.text();
-            alert('Error submitting application: ' + error);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Farming Agreement</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
         }
-    } catch (err) {
-        alert('Error: ' + err.message);
-    }
-});
 
-</script>
+        .header {
+            background-color: #057114;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+        }
 
+        .section-title {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-left: 4px solid #06cd3e;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #0d8d06;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #02670f;
+        }
+
+        .signature-box {
+            height: 100px;
+            border: 1px dashed #6c757d;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: #6c757d;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .file-upload {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Contract Farming Agreement</h1>
+        </div>
+
+        <form action="/apply" method="POST" id="contractForm" class="mt-4">
+            <p>This Contract Farming Agreement ("Agreement") is entered into on this
+                <input type="text" name="date" placeholder="DD" class="form-control d-inline w-auto"> day of
+                <input type="text" name="month" placeholder="MM" class="form-control d-inline w-auto">,
+                20<input type="text" name="year" placeholder="YY" class="form-control d-inline w-auto"> ("Effective Date"),
+                by and between:
+            </p>
+
+            <div class="section-title">1. Parties to the Agreement</div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">The Farmer</h5>
+                    <p><strong>Name:</strong> <input type="text" name="farmerName" placeholder="Enter name" class="form-control"></p>
+                    <p><strong>Address:</strong> <input type="text" name="farmerAddress" placeholder="Enter address" class="form-control"></p>
+                    <p><strong>Contact Number:</strong> <input type="text" name="farmerContact" placeholder="Enter contact" class="form-control"></p>
+                    <p><strong>Aadhaar/Identification Number:</strong> <input type="text" name="farmerId" placeholder="Enter ID" class="form-control"></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">The Company</h5>
+                    <p><strong>Name:</strong> <input type="text" name="companyName" placeholder="Enter name" class="form-control"></p>
+                    <p><strong>Address:</strong> <input type="text" name="companyAddress" placeholder="Enter address" class="form-control"></p>
+                    <p><strong>Contact Number:</strong> <input type="text" name="companyContact" placeholder="Enter contact" class="form-control"></p>
+                    <p><strong>CIN/Registration Number:</strong> <input type="text" name="companyId" placeholder="Enter registration number" class="form-control"></p>
+                </div>
+            </div>
+
+            <div class="section-title">2. Purpose of the Agreement</div>
+            <p>This Agreement establishes the terms and conditions under which the Farmer agrees to produce and supply agricultural produce ("Produce") to the Company, and the Company agrees to purchase the same from the Farmer.</p>
+
+            <div class="section-title">3. Terms and Conditions</div>
+            <ul>
+                <li><strong>Crops to be Cultivated:</strong> <input type="text" name="crops" placeholder="Enter crops" class="form-control"></li>
+                <li><strong>Quality and Quantity:</strong> As per Annexure A.</li>
+                <li><strong>Inputs Provided by the Company:</strong> Seeds, fertilizers, pesticides, and technical support.</li>
+                <li><strong>Obligations of the Farmer:</strong> Responsible use of inputs and adherence to guidelines.</li>
+                <li><strong>Obligations of the Company:</strong> Timely provision of inputs and procurement of crops.</li>
+            </ul>
+
+            <div class="section-title">4. Pricing and Payment Terms</div>
+            <p><strong>Pricing:</strong> INR <input type="text" name="price" placeholder="Enter amount" class="form-control d-inline w-auto"> per unit.</p>
+            <p><strong>Payment Schedule:</strong></p>
+            <ul>
+                <li>Advance: INR <input type="text" name="advance" placeholder="Enter amount" class="form-control d-inline w-auto"> payable by
+                    <input type="text" name="advanceDate" placeholder="Enter date" class="form-control d-inline w-auto">.</li>
+                <li>Final Payment: Within <input type="text" name="finalPaymentDays" placeholder="___" class="form-control d-inline w-auto"> days of delivery.</li>
+            </ul>
+            <p><strong>Payment Mode:</strong> Bank transfer.</p>
+
+            <div class="section-title">16. Signatures</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Farmer:</h5>
+                    <div class="signature-box">
+                        <input type="file" name="farmerSignature" class="form-control file-upload" accept="image/*,application/pdf">
+                    </div>
+                    <p><strong>Name:</strong> <input type="text" name="farmerSignName" placeholder="Enter name" class="form-control"></p>
+                    <p><strong>Date:</strong> <input type="text" name="farmerSignDate" placeholder="Enter date" class="form-control"></p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Company:</h5>
+                    <div class="signature-box">
+                        <input type="file" name="companySignature" class="form-control file-upload" accept="image/*,application/pdf">
+                    </div>
+                    <p><strong>Name:</strong> <input type="text" name="companySignName" placeholder="Enter name" class="form-control"></p>
+                    <p><strong>Designation:</strong> <input type="text" name="companySignDesignation" placeholder="Enter designation" class="form-control"></p>
+                    <p><strong>Date:</strong> <input type="text" name="companySignDate" placeholder="Enter date" class="form-control"></p>
+                </div>
+            </div>
+
+            <button type="button" id="generateContract" class="btn btn-primary mt-3">Generate Contract</button>
+        </form>
+
+        <div id="generatedContract" class="mt-5 d-none">
+            <h2>Completed Contract</h2>
+            <div id="contractContent"></div>
+            <button id="downloadContract" class="btn btn-success mt-3">Download Contract</button>
+        </div>
+
+        <footer>
+            &copy; 2025 Contract Farming Agreement. All Rights Reserved.
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('generateContract').addEventListener('click', function () {
+            const formData = new FormData(document.getElementById('contractForm'));
+            let contractText = `
+                <h2>Contract Farming Agreement</h2>
+                <p>This Contract Farming Agreement ("Agreement") is entered into on this <strong>${formData.get('date')}</strong> day of <strong>${formData.get('month')}</strong>, 20<strong>${formData.get('year')}</strong>, by and between:</p>
+                <h4>The Farmer</h4>
+                <p><strong>Name:</strong> ${formData.get('farmerName')}</p>
+                <p><strong>Address:</strong> ${formData.get('farmerAddress')}</p>
+                <p><strong>Contact Number:</strong> ${formData.get('farmerContact')}</p>
+                <p><strong>Aadhaar/ID:</strong> ${formData.get('farmerId')}</p>
+                <h4>The Company</h4>
+                <p><strong>Name:</strong> ${formData.get('companyName')}</p>
+                <p><strong>Address:</strong> ${formData.get('companyAddress')}</p>
+                <p><strong>Contact Number:</strong> ${formData.get('companyContact')}</p>
+                <p><strong>CIN/ID:</strong> ${formData.get('companyId')}</p>`;
+            document.getElementById('generatedContract').classList.remove('d-none');
+            document.getElementById('contractContent').innerHTML = contractText;
+        });
+    </script>
 </body>
 </html>

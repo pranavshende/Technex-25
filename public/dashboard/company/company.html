@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmHub - Company Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="company.css">
+    <style>
+        :root {
+    --primary-green: #00A389;
+    --primary-yellow: #FFB800;
+    --primary-red: #FF4D4D;
+    --background-gray: #F8F9FA;
+    --border-color: #E5E7EB;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background: var(--background-gray);
+    color: var(--text-primary);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background: white;
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.nav-item:hover, .nav-item.active {
+    background: #E5F5F2;
+    color: var(--primary-green);
+}
+
+/* Main Content Styles */
+.main-content {
+    display: none;
+    margin-left: 250px;
+    flex: 1;
+    padding: 1.5rem;
+}
+.main-content.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* .stat-card:hover{
+
+    transform: scale(1.1);  
+
+} */
+
+.stat-card h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Table Styles */
+.table-container {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--background-gray);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    width: 300px;
+}
+
+.search-bar input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+}
+
+.button {
+    background: var(--primary-green);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* Status Badges */
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-active {
+    background: #E5F5F2;
+    color: var(--primary-green);
+}
+
+.status-pending {
+    background: #FFF8E5;
+    color: var(--primary-yellow);
+}
+
+.status-failed {
+    background: #FFE5E5;
+    color: var(--primary-red);
+}
+
+/* PAYMENT */
+
+.chart-card {
+    height: 300px;
+}
+
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.folder-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.folder-card:hover {
+    transform: translateY(-5px);
+}
+
+.folder-card i {
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.settings-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.settings-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.settings-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.settings-form input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+}
+
+.toggle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-green);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.button-icon {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.button-icon:hover {
+    color: var(--primary-green);
+}
+
+.filter-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+
+
+/* Contracts Section Styles */
+.contracts-section .table-container {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.contracts-section .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contracts-section .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--background-gray);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    width: 300px;
+}
+
+.contracts-section .search-bar input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+}
+
+.contracts-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.contracts-section th, 
+.contracts-section td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contracts-section th {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+
+
+
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .contracts-section .table-container {
+        overflow-x: auto;
+    }
+    
+    .contracts-section .table-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .contracts-section .search-bar {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 80px;
+        padding: 1rem;
+    }
+
+    .logo span, .nav-item span {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+}
+    </style>
+    <style>
+  .contracts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.contracts-table th,
+.contracts-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.contracts-table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.status {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: capitalize;
+}
+
+.status-active {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.status-pending {
+    color: #856404;
+    background-color: #fff3cd;
+}
+
+.status-unknown {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+
+    </style>
+    <style>
+        .applications-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.applications-table th,
+.applications-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.applications-table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.applications-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.applications-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>FarmHub</span>
+        </div>
+        <a onclick="showProject('dash-board')" class="nav-item active">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+        </a>
+        <a onclick="showProject('contract')" class="nav-item">
+            <i class="fas fa-file-contract"></i>
+            <span>Contracts</span>
+        </a>
+        <a onclick="showProject('farmers')" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Received Applications</span>
+        </a>
+        <a onclick="showProject('payment')" class="nav-item">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Payments</span>
+        </a>
+        
+        <a onclick="showProject('delivery')" class="nav-item">
+            <i class="fas fa-truck"></i>
+            <span>Delivery</span>
+        </a>
+        <a onclick="showProject('report')" class="nav-item">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reports</span>
+        </a>
+        <a onclick="showProject('document')" class="nav-item">
+            <i class="fas fa-folder"></i>
+            <span>Documents</span>
+        </a>
+        <a onclick="showProject('support')" class="nav-item">
+            <i class="fas fa-headset"></i>
+            <span>Support</span>
+        </a>
+        <a onclick="showProject('profile')" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+    </nav>
+
+    <!-- Main Content Area -->
+<main id="dash-board" class="main-content active">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="page-title">Dashboard</h1>
+            <div class="profile">
+                <i class="fas fa-bell"></i>
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20design%20(7)-AQgFTcU2Yq6T8V9hQ20cMzniQK6229.png" alt="Profile" class="profile-img">
+            </div>
+        </header>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>12</h3>
+                <p><i class="fas fa-file-contract"></i> Active Contracts</p>
+            </div>
+            <div class="stat-card">
+                <h3>$45,680</h3>
+                <p><i class="fas fa-dollar-sign"></i> Total Payouts</p>
+            </div>
+            <div class="stat-card">
+                <h3>3</h3>
+                <p><i class="fas fa-truck"></i> Upcoming Deliveries</p>
+            </div>
+            <div class="stat-card">
+                <h3>2</h3>
+                <p><i class="fas fa-clock"></i> Pending Actions</p>
+            </div>
+        </div>
+
+        <!-- Contracts Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search contracts...">
+                </div>
+                <a href="/requirementform">
+                <button class="button">
+                    <i class="fas fa-plus"></i>
+                    New Contract
+                </button>
+            </a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Contract Name</th>
+                        <th>Farmer</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Organic Wheat Supply</td>
+                        <td>John Farmer</td>
+                        <td>$12,500</td>
+                        <td>Mar 15, 2024</td>
+                        <td><span class="status status-active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>Corn Production</td>
+                        <td>Sarah Smith</td>
+                        <td>$8,900</td>
+                        <td>Apr 01, 2024</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Rice Cultivation</td>
+                        <td>Mike Johnson</td>
+                        <td>$22,000</td>
+                        <td>Mar 30, 2024</td>
+                        <td><span class="status status-failed">Failed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</main>
+
+<!-- contract Section -->
+<main id="contract" class="main-content">
+    <div class="contracts-section">
+        <div class="table-container">
+            <div class="table-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search contracts...">
+                </div>
+                <button class="button">
+                   <a href="/requirementform"><i class="fas fa-plus"></i>
+                    New Contract</a> 
+                </button>
+                
+                
+    </div>
+    <table id="contractsTable" class="contracts-table">
+        <thead>
+            <tr>
+                <th>Contract Name</th>
+                <th>Farmer</th>
+                <th>Start Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+</main>
+
+
+<main id="payment" class="main-content">
+
+        <!-- Payments Page -->
+<div class="table-container payments-section">
+    <div class="table-header">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search payments...">
+        </div>
+        <button class="button">
+            <i class="fas fa-file-export"></i>
+            Export
+        </button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Contract</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Reference</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>3/11/2024</td>
+                <td>Organic Wheat Supply</td>
+                <td>$12,500</td>
+                <td><span class="status status-active">Completed</span></td>
+                <td>PAY-2024-031</td>
+            </tr>
+            <tr>
+                <td>3/5/2024</td>
+                <td>Corn Production</td>
+                <td>$8,100</td>
+                <td><span class="status status-pending">Pending</span></td>
+                <td>PAY-2024-030</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</main>
+
+
+<!-- Farmers Management Page -->
+<main id="farmers" class="main-content">
+<div class="farmers-section">
+    <div class="table-container">
+        <div class="table-header">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search farmers...">
+            </div>
+            <button class="button">
+                <i class="fas fa-user-plus"></i>
+                Add Farmer
+            </button>
+        </div>
+        <table id="applicationsTable" class="applications-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Field Size (acres)</th>
+                    <th>Crop Type</th>
+                    <th>Additional Info</th>
+                    <th>Application Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+        </table>     
+    </div>
+</div>
+</main>
+
+<main id="delivery" class="main-content">
+<!-- Delivery/Logistics Page -->
+<div class="delivery-section">
+    <div class="table-container">
+        <div class="table-header">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search deliveries...">
+            </div>
+            <div class="filter-group">
+                <button class="button">
+                    <i class="fas fa-filter"></i>
+                    Filter
+                </button>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Farmer Name</th>
+                    <th>Delivery Date</th>
+                    <th>Contract</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Farmer</td>
+                    <td>Mar 20, 2024</td>
+                    <td>Organic Wheat Supply</td>
+                    <td><span class="status status-pending">Scheduled</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</main>
+
+
+<!-- Reports and Analytics Page -->
+<main id="report" class="main-content">
+<div class="reports-section">
+    <div class="stats-grid">
+        <div class="stat-card chart-card">
+            <h3>Contract Performance</h3>
+            <canvas id="contractChart"></canvas>
+        </div>
+        <div class="stat-card chart-card">
+            <h3>Payout Trends</h3>
+            <canvas id="payoutChart"></canvas>
+        </div>
+    </div>
+    <div class="table-container">
+        <div class="table-header">
+            <h2>Generated Reports</h2>
+            <button class="button">
+                <i class="fas fa-file-pdf"></i>
+                Generate Report
+            </button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Report Name</th>
+                    <th>Generated Date</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monthly Performance Report</td>
+                    <td>Mar 1, 2024</td>
+                    <td>PDF</td>
+                    <td>
+                        <button class="button-icon">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</main>
+
+
+<!-- Documents/Resources Page -->
+<main id="document" class="main-content">
+<div class="documents-section">
+    <div class="documents-grid">
+        <div class="folder-card">
+            <i class="fas fa-folder fa-3x"></i>
+            <h3>Contracts</h3>
+            <p>12 files</p>
+        </div>
+        <div class="folder-card">
+            <i class="fas fa-folder fa-3x"></i>
+            <h3>Training</h3>
+            <p>8 files</p>
+        </div>
+        <div class="folder-card">
+            <i class="fas fa-folder fa-3x"></i>
+            <h3>Policies</h3>
+            <p>5 files</p>
+        </div>
+    </div>
+</div>
+</main>
+
+<!-- Support/Help Page -->
+
+<main id="support" class="main-content">
+<div class="support-section">
+    <div class="table-container">
+        <div class="table-header">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search tickets...">
+            </div>
+            <button class="button">
+                <i class="fas fa-ticket-alt"></i>
+                New Ticket
+            </button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Subject</th>
+                    <th>Farmer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#1234</td>
+                    <td>Payment Issue</td>
+                    <td>John Farmer</td>
+                    <td>Mar 15, 2024</td>
+                    <td><span class="status status-pending">Open</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</main>
+
+
+<!-- Settings/Profile Page -->
+<main id="profile" class="main-content">
+<div class="settings-section">
+    <div class="settings-grid">
+        <div class="settings-card">
+            <h3>Company Details</h3>
+            <form class="settings-form">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" value="FarmHub Inc.">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" value="contact@farmhub.com">
+                </div>
+                <button class="button">Save Changes</button>
+            </form>
+        </div>
+        <div class="settings-card">
+            <h3>Notification Settings</h3>
+            <div class="settings-toggles">
+                <div class="toggle-item">
+                    <span>Email Notifications</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="toggle-item">
+                    <span>SMS Notifications</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<script>
+    // Function to fetch application data from the API
+    async function fetchApplications() {
+        try {
+            const response = await fetch('/api/applications'); // Replace with your API endpoint
+            const applications = await response.json();
+            populateApplicationsTable(applications);
+        } catch (error) {
+            console.error('Error fetching applications:', error);
+        }
+    }
+
+    // Function to populate the table dynamically
+    function populateApplicationsTable(applications) {
+        const tableBody = document.querySelector('#applicationsTable tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        applications.forEach(application => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${application.name || 'N/A'}</td>
+                <td>${application.email || 'N/A'}</td>
+                <td>${application.phone || 'N/A'}</td>
+                <td>${application.fieldSize || 'N/A'}</td>
+                <td>${application.cropType || 'N/A'}</td>
+                <td>${application.additionalInfo || 'N/A'}</td>
+                <td>${new Date(application.createdAt).toLocaleDateString()}</td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Function to fetch contract data from the API
+    async function fetchContracts() {
+        try {
+            const response = await fetch('/api/contracts'); // Replace with your API endpoint
+            const contracts = await response.json();
+            populateContractsTable(contracts);
+        } catch (error) {
+            console.error('Error fetching contracts:', error);
+        }
+    }
+
+    // Function to populate the table dynamically
+    function populateContractsTable(contracts) {
+        const tableBody = document.querySelector('#contractsTable tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        contracts.forEach(contract => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${contract.cropType || 'N/A'}</td>
+                <td>${contract.firmName || 'N/A'}</td>
+                <td>${contract.date || 'N/A'}</td>
+                <td>₹${contract.amount || '0'}</td>
+                <td>
+                    <span class="status status-${contract.status?.toLowerCase() || 'unknown'}">
+                        ${contract.status || 'N/A'}
+                    </span>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Fetch and populate tables on page load
+    window.onload = () => {
+        fetchContracts();
+        fetchApplications();
+    };
+</script>
+
+
+
+<script>
+        // Toggle mobile navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-bar input');
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const tableRows = document.querySelectorAll('tbody tr');
+
+                tableRows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
+
+
+        function showProject(SectionId) {
+      // Hide all sections
+      const project = document.querySelectorAll(".main-content");
+      project.forEach((section) => {
+        section.classList.remove("active");
+      });
+
+      // Show the selected section with animation
+      const selectedproject = document.getElementById(SectionId);
+      if (selectedproject) {
+        
+        selectedproject.classList.add("active");
+
+      }
+    }
+    </script>
+</body>
+</html>

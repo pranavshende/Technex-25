@@ -1,81 +1,368 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketplace</title>
+    <title>FarmHub Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-        }
-        .navbar {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        .search-bar {
-            margin: 20px;
-            text-align: center;
-        }
-        .search-bar input {
-            width: 80%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .contract-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 20px;
-        }
-        .contract-item {
-            background-color: white;
-            margin: 10px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 30%;
             box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
-        .contract-item h3 {
-            margin-top: 0;
+
+        :root {
+            --sidebar-width: 240px;
+            --primary-green: #22c55e;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            background-color: #f9fafb;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: white;
+            border-right: 1px solid var(--border-color);
+            padding: 1rem;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            transform: translateX(0); /* Ensure sidebar is visible by default */
+        }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer; /* Add cursor pointer for better UX */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            color: #4b5563;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .nav-item i {
+            width: 24px;
+        }
+
+        .nav-item.active {
+            background-color: #f0fdf4;
+            color: var(--primary-green);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .filter-dropdown {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .new-contract-btn {
+            background: var(--primary-green);
+            color: white;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .contracts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contract-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .contract-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .company-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+        }
+
+        .status-badge.active {
+            background-color: #f0fdf4;
+            color: var(--primary-green);
+        }
+
+        .status-badge.pending {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-badge.completed {
+            background-color: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .contract-amount {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .contract-date {
+            color: #6b7280;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .apply-button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 10px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            text-align: center;
+        margin-top: 10px;
+        display: inline-block;
+        padding: 6px 12px; /* Reduced padding for a smaller button */
+        font-size: 14px; /* Smaller font size */
+        color: #ffffff;
+        background-color: #28a745; /* Green background */
+        border: none;
+        border-radius: 4px; /* Slightly smaller border radius */
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .apply-button:hover {
+        background-color: #218838; /* Darker green on hover */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Subtle shadow on hover */
+    }
+
+    .apply-button:active {
+        background-color: #1e7e34; /* Even darker green when clicked */
+        transform: scale(0.97); /* Slight shrink on click */
+    }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .contracts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
         }
-        .apply-button:hover {
-            background-color: #218838;
-        }
-    </style>
+    </style> 
 </head>
 <body>
-    <div class="navbar">
-        <h1>FarmVision Marketplace</h1>
-    </div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
 
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search contracts by crop type..." oninput="filterContracts()">
-    </div>
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>FarmHub</span>
+        </div>
+        <nav>
+            <a href="/farmerprofile" class="nav-item">
+                <i class="fas fa-user"></i>
+                Profile
+            <a href="/farmerdashboard" class="nav-item ">
+                <i class="fas fa-th-large"></i>
+                Dashboard
+            </a>
+            <a href="/marketplace" class="nav-item active">
+                <i class="fas fa-file-contract"></i>
+                Contracts
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-money-bill-wave"></i>
+                Payments
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-headset"></i>
+                Support
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-folder"></i>
+                Documents
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-book"></i>
+                Resources
+            </a>
+        </nav>
+    </aside>
 
-    <div class="contract-list" id="contractList">
-        <!-- Contract items will be dynamically inserted here -->
-    </div>
+    <main class="main-content">
+        <header class="header">
+            <h1>Contracts</h1>
+        </header>
+
+        
+
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input id="searchInput" type="text" placeholder="Search contracts..." onkeyup="filterContracts()">
+            </div>
+            <div class="filter-dropdown">
+                <i class="fas fa-filter"></i>
+                <span>All Contracts</span>
+            </div>
+        </div>
+
+        <div id="contractList" class="contracts-grid">
+            <!-- Contracts will be dynamically inserted here -->
+        </div>
+        <div id="profile-content">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </main>
 
     <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+
         // Function to fetch contract data from the API
         async function fetchContracts() {
             try {
@@ -94,15 +381,30 @@
 
             contracts.forEach(contract => {
                 const contractItem = document.createElement('div');
-                contractItem.classList.add('contract-item');
+                contractItem.classList.add('contract-item', 'contract-card');
                 contractItem.innerHTML = `
-                    <h3>${contract.cropType}</h3>
-                    <p><strong>Firm Name:</strong> ${contract.firmName}</p>
+                    <div class="contract-header">
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h3>${contract.cropType}</h3>
+                                <p>${contract.firmName}</p>
+                            </div>
+                        </div>
+                        <span class="status-badge">${contract.status || 'N/A'}</span>
+                    </div>
+                    <div class="contract-amount">₹${contract.amount}</div>
+                    <div class="contract-date">
+                        <i class="far fa-calendar"></i>
+                        ${contract.date || 'N/A'}
+                    </div>
                     <p><strong>Quality:</strong> ${contract.cropQuality}</p>
                     <p><strong>Time Period:</strong> ${contract.timePeriod}</p>
                     <p><strong>Amount:</strong> ${contract.amountOfCrop} tons</p>
                     <p><strong>Additional Info:</strong> ${contract.additionalInfo || 'N/A'}</p>
-                    <a href="/farmerReq" class="apply-button" target="_blank">Apply</a>
+                    <a href="/contractterms" class="apply-button" target="_blank">Apply</a>
                 `;
                 contractList.appendChild(contractItem);
             });
@@ -126,5 +428,84 @@
         // Fetch and display contracts when the page loads
         window.onload = fetchContracts;
     </script>
+        <script>
+            // Function to fetch the logged-in email from the backend
+            async function getLoggedInEmail() {
+                try {
+                    const response = await fetch('/api/logged-in-email');
+                    const data = await response.json();
+                    return data.email; // Return the logged-in email
+                } catch (error) {
+                    console.error('Error fetching logged-in email:', error);
+                    return null;
+                }
+            }
+    
+            // Function to fetch profile data based on logged-in email
+            async function fetchRegistrationByEmail(email) {
+                try {
+                    const response = await fetch(`/api/fetch-registration?email=${encodeURIComponent(email)}`);
+                    const registration = await response.json();
+    
+                    if (!registration || registration.error) {
+                        document.getElementById('profile-content').innerHTML = `<p>${registration.error || "Profile not found."}</p>`;
+                        return;
+                    }
+    
+                    // Dynamically generate the profile HTML
+                    const profileHTML = `
+                        <div class="profile-section">
+                            <h2>Firm Details</h2>
+                            <div class="profile-field"><strong>Firm Name:</strong> <span>${registration.firmName}</span></div>
+                            <div class="profile-field"><strong>Firm Type:</strong> <span>${registration.firmType}</span></div>
+                            <div class="profile-field"><strong>Registration Number:</strong> <span>${registration.registrationNumber}</span></div>
+                            <div class="profile-field"><strong>Date of Establishment:</strong> <span>${registration.dateOfEstablishment}</span></div>
+                        </div>
+                        <div class="profile-section">
+                            <h2>Contact Details</h2>
+                            <div class="profile-field"><strong>Contact Person:</strong> <span>${registration.contactPerson}</span></div>
+                            <div class="profile-field"><strong>Designation:</strong> <span>${registration.designation}</span></div>
+                            <div class="profile-field"><strong>Email:</strong> <span>${registration.contactEmail}</span></div>
+                            <div class="profile-field"><strong>Phone:</strong> <span>${registration.contactPhone}</span></div>
+                        </div>
+                        <div class="profile-section">
+                            <h2>Business Details</h2>
+                            <div class="profile-field"><strong>Core Business:</strong> <span>${registration.coreBusiness}</span></div>
+                            <div class="profile-field"><strong>Annual Turnover:</strong> <span>${registration.annualTurnover}</span></div>
+                            <div class="profile-field"><strong>Certifications:</strong> <span>${registration.certifications}</span></div>
+                        </div>
+                    `;
+    
+                    document.getElementById('profile-content').innerHTML = profileHTML;
+                } catch (error) {
+                    console.error("Error loading profile:", error);
+                    document.getElementById('profile-content').innerHTML = "<p>Error loading profile data.</p>";
+                }
+            }
+            
+    
+            document.getElementById('createRequirementBtn').addEventListener('click', function() {
+        // Example action: Display an alert
+        window.location.href = '/requirementform';
+        
+        
+        // Alternatively, redirect to another page
+        // window.location.href = '/create-requirement';
+    });
+    
+    
+            // Main function to fetch email and then load the profile
+            async function loadProfile() {
+                const email = await getLoggedInEmail();
+                if (email) {
+                    fetchRegistrationByEmail(email);
+                } else {
+                    document.getElementById('profile-content').innerHTML = "<p>Please log in to view your profile.</p>";
+                }
+            }
+    
+            loadProfile(); // Call the function when the page loads
+        </script>
 </body>
+
 </html>

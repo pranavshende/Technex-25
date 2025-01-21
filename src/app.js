@@ -47,16 +47,21 @@ app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        // Authenticate the user (implement `authenticateUser` to validate credentials)
         const user = await authenticateUser(email, password);
+
         if (user) {
             req.login(user, (err) => {
                 if (err) {
                     console.error('Error logging in user:', err);
                     return res.status(500).json({ success: false, message: 'Server error during login' });
                 }
+
+                // Include the role in the response
                 return res.json({
                     success: true,
                     message: `Welcome, ${user.name}! You have been authenticated.`,
+                    role: user.role, // Return user's role
                 });
             });
         } else {
@@ -70,6 +75,7 @@ app.post('/login', async (req, res) => {
         return res.status(500).json({ success: false, message: 'Server error during login' });
     }
 });
+
 
 // Signup route
 app.post('/signup', async (req, res) => {
@@ -107,7 +113,27 @@ app.get('/api/fetch-registration', async (req, res) => {
 
     try {
         const registration = await fetchRegistrationByEmail(email);
-        const farmerRegistration = await fetchFarmerRegistrationByEmail(email);
+    
+
+        if (!registration) {
+            return res.status(404).json({ error: 'Profile not found' });
+        }
+
+        return res.json(registration);
+    } catch (error) {
+        console.error('Error fetching registration:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+app.get('/api/fetchfarmer-registration', async (req, res) => {
+    const email = req.query.email;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+
+    try {
+        const registration = await fetchFarmerRegistrationByEmail(email);
 
         if (!registration) {
             return res.status(404).json({ error: 'Profile not found' });
@@ -120,6 +146,8 @@ app.get('/api/fetch-registration', async (req, res) => {
     }
 });
 
+
+
 // Get logged-in user's email
 app.get('/api/logged-in-email', (req, res) => {
     if (req.isAuthenticated()) {
@@ -130,7 +158,7 @@ app.get('/api/logged-in-email', (req, res) => {
 });
 
 // Handle Contract Farming Form Submission
-app.post('/submit-contract-farming', async (req, res) => {
+app.post('/firmRegistration', async (req, res) => {
     const {
         firmName,
         firmType,
@@ -215,7 +243,7 @@ app.post('/submit-farmer-registration', async (req, res) => {
 });
 
 app.post('/create-contract', async (req, res) => {
-    const { firmName, cropType, cropQuality, timePeriod, amountOfCrop, additionalInfo } = req.body;
+    const { firmName, cropType, cropQuality, timePeriod, amountOfCrop, additionalInfo ,amount } = req.body;
 
     const newContract = new Contract({
         firmName,
@@ -223,6 +251,7 @@ app.post('/create-contract', async (req, res) => {
         cropQuality,
         timePeriod,
         amountOfCrop,
+        amount,
         additionalInfo
     });
 
@@ -241,6 +270,7 @@ app.post('/create-contract', async (req, res) => {
     }
 });
 
+
 app.get('/api/contracts', async (req, res) => {
     try {
       const contracts = await Contract.find();
@@ -255,10 +285,12 @@ app.get('/api/contracts', async (req, res) => {
     const newApplication = new Application({
       name,
       email,
-      phone,
       fieldSize,
       cropType,
       additionalInfo,
+      farmeraddress,
+      farmerContact,
+      farmerId,
     });
     try {
       await newApplication.save();
@@ -280,16 +312,38 @@ app.get('/api/contracts', async (req, res) => {
         res.status(500).send('Error fetching applications.');
     }
 });
+app.get('/companydashboard',(req,res)=>{
+    res.sendFile(path.join(__dirname , '../public/dashboard/company/company.html'));
+});
 
+app.get('/logo-photo',(req,res)=>{
+    res.sendFile(path.join(__dirname , '../public/dashboard/farmhub.jpg'));
+});
+app.get('/account-photo',(req,res)=>{
+    res.sendFile(path.join(__dirname , '../public/dashboard/account.png'));
+});
+
+app.get('/contractterms',(req,res)=>{
+    res.sendFile(path.join(__dirname , '../public/dashboard/fullcontract.html'));
+});
+
+app.get('/marketplace',(req,res)=>{
+    res.sendFile(path.join(__dirname , '../public/dashboard/marketplace2.html'));
+});
 
 app.get('/applications', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/dashboard/receivedapplication.html'));
 });
 
-
+app.get('/farmerdashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/dashboard/farmerdashboard.html'));
+});
 // Dashboard Route with Authorization
-app.get('/dashboard', (req, res) => {
+app.get('/companyprofile', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/dashboard/firmProfile.html'));
+});
+app.get('/farmerprofile', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/dashboard/farmerProfile.html'));
 });
 
 app.get('/farmerReq', (req, res) => {
