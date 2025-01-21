@@ -259,7 +259,7 @@ app.post('/create-contract', async (req, res) => {
         const savedContract = await newContract.save();
         console.log('Contract created successfully:', savedContract);
         // Redirect to the profile page with a success message
-        res.redirect('/dashboard?contractCreated=true');
+        res.redirect('/companydashboard');
     } catch (err) {
         console.error('Error creating contract:', err);
         res.status(500).json({
@@ -311,6 +311,9 @@ app.get('/api/contracts', async (req, res) => {
         console.error('Error fetching applications:', error);
         res.status(500).send('Error fetching applications.');
     }
+});
+app.get('/companydashboard2',(req,res)=>{
+    res.sendFile(path.join(__dirname , '../public/dashboard/company/companyprofile2.html'));
 });
 app.get('/companydashboard',(req,res)=>{
     res.sendFile(path.join(__dirname , '../public/dashboard/company/company.html'));
@@ -371,10 +374,12 @@ app.get('/farmerRegistrationForm', (req, res) => {
 
 
 // Root route (Serve login page)
-app.get('/', (req, res) => {
+app.get('/loginpage', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/dashboard/login.html'));
 });
-
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/dashboard/landingpage.html'));
+});
 
 // Middleware for user role fetching and route protection
 app.use(fetchUserRole);

@@ -414,6 +414,95 @@ input:checked + .slider:before {
     font-weight: 500;
     color: var(--text-secondary);
 }
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+
+.profile-header {
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header img {
+    width: 120px; /* Adjust to your preferred size */
+    height: 120px;
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Ensures image stays proportional */
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    font-size: 2rem;
+    color: #333;
+    margin: 0;
+}
+
+.profile-header p {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 5px;
+}
+
+
+/* Profile Content Sections */
+.profile-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.profile-section h2 {
+    font-size: 22px;
+    color: #34495e;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+.profile-field {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.profile-field strong {
+    color: #2c3e50;
+}
+
+.profile-field span {
+    color: #7f8c8d;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .main-content {
+        padding: 15px;
+        margin: 20px;
+    }
+
+    .profile-header h1 {
+        font-size: 24px;
+    }
+
+    .profile-section h2 {
+        font-size: 20px;
+    }
+
+    .profile-field {
+        font-size: 14px;
+    }
+}
 
 
 
@@ -549,7 +638,11 @@ input:checked + .slider:before {
             <i class="fas fa-leaf"></i>
             <span>FarmHub</span>
         </div>
-        <a onclick="showProject('dash-board')" class="nav-item active">
+        <a href='#' class="nav-item active" onclick="showProject('profile')">
+            <i class="fas fa-user-circle"></i>
+            <span>Profile</span>
+        </a>
+        <a onclick="showProject('dash-board')" class="nav-item ">
             <i class="fas fa-chart-line"></i>
             <span>Dashboard</span>
         </a>
@@ -606,7 +699,7 @@ input:checked + .slider:before {
                 <p><i class="fas fa-file-contract"></i> Active Contracts</p>
             </div>
             <div class="stat-card">
-                <h3>$45,680</h3>
+                <h3>Rs. 45,680</h3>
                 <p><i class="fas fa-dollar-sign"></i> Total Payouts</p>
             </div>
             <div class="stat-card">
@@ -647,21 +740,21 @@ input:checked + .slider:before {
                     <tr>
                         <td>Organic Wheat Supply</td>
                         <td>John Farmer</td>
-                        <td>$12,500</td>
+                        <td>Rs. 12,500</td>
                         <td>Mar 15, 2024</td>
                         <td><span class="status status-active">Active</span></td>
                     </tr>
                     <tr>
                         <td>Corn Production</td>
                         <td>Sarah Smith</td>
-                        <td>$8,900</td>
+                        <td>Rs. 8,900</td>
                         <td>Apr 01, 2024</td>
                         <td><span class="status status-pending">Pending</span></td>
                     </tr>
                     <tr>
                         <td>Rice Cultivation</td>
                         <td>Mike Johnson</td>
-                        <td>$22,000</td>
+                        <td>Rs. 22,000</td>
                         <td>Mar 30, 2024</td>
                         <td><span class="status status-failed">Failed</span></td>
                     </tr>
@@ -731,14 +824,14 @@ input:checked + .slider:before {
             <tr>
                 <td>3/11/2024</td>
                 <td>Organic Wheat Supply</td>
-                <td>$12,500</td>
+                <td>Rs. 12,500</td>
                 <td><span class="status status-active">Completed</span></td>
                 <td>PAY-2024-031</td>
             </tr>
             <tr>
                 <td>3/5/2024</td>
                 <td>Corn Production</td>
-                <td>$8,100</td>
+                <td>Rs. 8,100</td>
                 <td><span class="status status-pending">Pending</span></td>
                 <td>PAY-2024-030</td>
             </tr>
@@ -931,6 +1024,19 @@ input:checked + .slider:before {
 </div>
 </main>
 
+ <!-- Main Content Area -->
+ <main id="profile" class="main-content">
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="/account-photo" alt="Profile Photo">
+            <h1>Company Profile</h1>
+            <p>Your company details and information</p>
+        </div>
+        <div id="profile-content">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+</main>
 
 <!-- Settings/Profile Page -->
 <main id="profile" class="main-content">
@@ -1048,7 +1154,75 @@ input:checked + .slider:before {
     };
 </script>
 
+<script>
+    async function getLoggedInEmail() {
+        try {
+            const response = await fetch('/api/logged-in-email');
+            if (!response.ok) throw new Error('Failed to fetch email.');
+            const data = await response.json();
+            return data.email;
+        } catch (error) {
+            console.error('Error fetching logged-in email:', error);
+            return null;
+        }
+    }
 
+    async function fetchRegistrationByEmail(email) {
+        try {
+            const response = await fetch(`/api/fetch-registration?email=${encodeURIComponent(email)}`);
+            if (!response.ok) throw new Error('Failed to fetch profile.');
+            const registration = await response.json();
+
+            const profileContent = document.getElementById('profile-content');
+
+            if (!registration || registration.error) {
+                profileContent.innerHTML = `<p>${registration.error || "Profile not found."}</p>`;
+                return;
+            }
+
+            profileContent.innerHTML = `
+                <div class="profile-section">
+                    <h2>Firm Details</h2>
+                    <div class="profile-field"><strong>Firm Name:</strong> <span>${registration.firmName || 'N/A'}</span></div>
+                    <div class="profile-field"><strong>Firm Type:</strong> <span>${registration.firmType || 'N/A'}</span></div>
+                    <div class="profile-field"><strong>Registration Number:</strong> <span>${registration.registrationNumber || 'N/A'}</span></div>
+                    <div class="profile-field"><strong>Date of Establishment:</strong> <span>${registration.dateOfEstablishment || 'N/A'}</span></div>
+                </div>
+                <div class="profile-section">
+                    <h2>Contact Details</h2>
+                    <div class="profile-field"><strong>Contact Person:</strong> <span>${registration.contactPerson || 'N/A'}</span></div>
+                    <div class="profile-field"><strong>Designation:</strong> <span>${registration.designation || 'N/A'}</span></div>
+                    <div class="profile-field"><strong>Email:</strong> <span>${registration.contactEmail || 'N/A'}</span></div>
+                    <div class="profile-field"><strong>Phone:</strong> <span>${registration.contactPhone || 'N/A'}</span></div>
+                </div>
+                <div class="profile-section">
+                    <h2>Business Details</h2>
+                    <div class="profile-field"><strong>Business Sector:</strong> <span>${registration.businessSector || 'N/A'}</span></div>
+                    <div class="profile-field"><strong>Country:</strong> <span>${registration.country || 'N/A'}</span></div>
+                </div>
+            `;
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+            document.getElementById('profile-content').innerHTML = "<p>Failed to load profile.</p>";
+        }
+    }
+
+    async function showProject(projectId) {
+        const sections = document.querySelectorAll('.main-content');
+        sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(projectId).classList.add('active');
+
+        if (projectId === 'profile') {
+            const email = await getLoggedInEmail();
+            if (email) {
+                await fetchRegistrationByEmail(email);
+            }
+        }
+    }
+
+    // Initialize
+    showProject('profile');
+</script>
 
 <script>
         // Toggle mobile navigation

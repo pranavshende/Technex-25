@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriConnect - Connecting Farmers and Companies for Sustainable Growth</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    
+
+<style>
+    :root {
+    --color-primary: #4CAF50;
+    --color-secondary: #FFC107;
+    --color-text: #333333;
+    --color-background: #F5F5F5;
+    --color-white: #FFFFFF;
+    --font-heading: 'Arial', sans-serif;
+    --font-body: 'Helvetica', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+/* Base Button Styles */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Filled Button */
+.btn-filled {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+}
+
+.btn-filled:hover {
+    background-color: #3d8b40;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Outline Button */
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Ghost Button */
+.btn-ghost {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: none;
+}
+
+.btn-ghost:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Gradient Button */
+.btn-gradient {
+    background: linear-gradient(45deg, var(--color-primary), #2E7D32);
+    color: var(--color-white);
+    border: none;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(45deg, #2E7D32, var(--color-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Ripple Button */
+.btn-ripple {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+}
+
+.btn-ripple::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: 1;
+}
+
+.btn-ripple:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* 3D Button */
+.btn-3d {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    box-shadow: 0 6px #2E7D32;
+    transform: translateY(-2px);
+}
+
+.btn-3d:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px #2E7D32;
+}
+
+.btn-3d:active {
+    transform: translateY(0);
+    box-shadow: 0 0 #2E7D32;
+}
+
+/* Rounded Button */
+.btn-rounded {
+    border-radius: 50px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+}
+
+.btn-rounded:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Icon Button */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+}
+
+.btn-icon i {
+    transition: transform 0.3s ease;
+}
+
+.btn-icon:hover i {
+    transform: translateX(4px);
+}
+
+/* Size Variations */
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 16px 32px;
+    font-size: 1.125rem;
+}
+
+/* Disabled State */
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Header Styles */
+header {
+    background-color: var(--color-white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links a {
+    color: var(--color-text);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.carousel-slides {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--color-white);
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    
+gap: 1rem;
+}
+
+/* Features Section */
+.features {
+    padding: 4rem 0;
+    background-color: var(--color-white);
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+    font-size: 2.5rem;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feature-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: #4CAF50; /* Or your primary color */
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.5;
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding: 6rem 0;
+    background-color: var(--color-background);
+    position: relative;
+    overflow: hidden;
+}
+
+.how-it-works h2 {
+    text-align: center;
+    margin-bottom: 4rem;
+    font-size: 2.5rem;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    position: relative;
+}
+
+.step {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: var(--color-white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.step:hover .step-icon {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.step-number {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: var(--color-secondary);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.step-description {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+/* Benefits Section */
+.benefits {
+    padding: 6rem 0;
+    background-color: var(--color-background);
+    overflow: hidden;
+}
+
+.benefits h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.benefits-comparison {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.benefit-column {
+    flex: 1;
+    width: 50%; /* Ensure equal width */
+    max-width: 600px;
+}
+
+.benefit-card {
+    background: var(--color-white);
+    border-radius: 15px;
+    padding: 2rem;
+    height: 100%; /* Ensure equal height */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateZ(0);
+    transition: all 0.3s ease;
+}
+
+.benefit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: var(--color-background);
+    min-height: 120px; /* Ensure consistent height for items */
+}
+
+.benefit-item:hover {
+    transform: translateX(10px);
+    background: linear-gradient(135deg, var(--color-background), white);
+}
+
+.benefit-item i {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    padding-top: 0.2rem;
+}
+
+.benefit-content h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-text);
+    font-size: 1.1rem;
+}
+
+.benefit-content p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Animation for benefits */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.farmer-benefits {
+    animation: slideInFromLeft 0.8s ease-out forwards;
+}
+
+.company-benefits {
+    animation: slideInFromRight 0.8s ease-out forwards;
+}
+
+/* Updated Testimonials Section Styles */
+.testimonials {
+    padding: 4rem 0;
+    background-color: var(--color-background);
+    overflow: hidden;
+    position: relative;
+}
+
+.testimonials::before,
+.testimonials::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    z-index: 2;
+}
+
+.testimonials::before {
+    left: 0;
+    background: linear-gradient(to right, var(--color-background), transparent);
+}
+
+.testimonials::after {
+    right: 0;
+    background: linear-gradient(to left, var(--color-background), transparent);
+}
+
+.testimonial-track {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.testimonial-slider {
+    display: flex;
+    gap: 2rem;
+    animation: scroll 40s linear infinite;
+    width: max-content;
+}
+
+.testimonial {
+    flex: 0 0 350px;
+    background: var(--color-white);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    transform: translateZ(0);
+}
+
+.testimonial:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    object-fit: cover;
+    border: 4px solid var(--color-primary);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial p {
+    color: var(--color-text);
+    font-style: italic;
+    margin: 1rem 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.testimonial h4 {
+    color: var(--color-primary);
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.testimonial-role {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.rating {
+    color: var(--color-secondary);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.rating i {
+    margin: 0 2px;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-350px * 6 - 12rem)); /* Adjust based on number of cards */
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .testimonial {
+        flex: 0 0 300px;
+    }
+
+    @keyframes scroll {
+        100% {
+            transform: translateX(calc(-300px * 6 - 12rem));
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonial {
+        flex: 0 0 280px;
+        padding: 1.5rem;
+    }
+
+    .testimonial-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    @keyframes scroll {
+        100% {
+            transform: translateX(calc(-280px * 6 - 12rem));
+        }
+    }
+
+    .testimonials::before,
+    .testimonials::after {
+        width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonial {
+        flex: 0 0 260px;
+        padding: 1rem;
+    }
+
+    .testimonial-image {
+        width: 70px;
+        height: 70px;
+    }
+
+    .rating {
+        font-size: 1rem;
+    }
+
+    @keyframes scroll {
+        100% {
+            transform: translateX(calc(-260px * 6 - 12rem));
+        }
+    }
+
+    .testimonials::before,
+    .testimonials::after {
+        width: 50px;
+    }
+}
+
+/* CTA Section */
+.cta {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #2E7D32 100%);
+    color: var(--color-white);
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cta h2 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.separator {
+    margin: 2rem 0;
+    text-align: center;
+    position: relative;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+}
+
+.separator::before { left: 0; }
+.separator::after { right: 0; }
+
+.separator span {
+    background: inherit;
+    padding: 0 1rem;
+}
+
+.demo-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.input-group {
+    flex: 1;
+    position: relative;
+}
+
+.input-group i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-primary);
+}
+
+.demo-form input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+    border-radius: 5px;
+    border: none;
+}
+
+.trust-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.trust-item i {
+    color: var(--color-secondary);
+}
+
+/* Responsive Styles for CTA Section */
+@media (max-width: 768px) {
+    .cta {
+        padding: 3rem 0;
+    }
+
+    .cta h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .demo-form {
+        flex-direction: column;
+    }
+    
+    .trust-indicators {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+/* Animation Classes */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.fade-up {
+    animation: fadeUp 0.6s ease forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* FAQ Section */
+.faq {
+    padding: 4rem 2rem;
+    background-color: var(--color-white);
+}
+
+.faq h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.accordion {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.accordion-item {
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 1.5rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.accordion-icon {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.accordion-icon::before,
+.accordion-icon::after {
+    content: '';
+    position: absolute;
+    background-color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.accordion-icon::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+.accordion-icon::after {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+.accordion-header.active .accordion-icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.accordion-body {
+    padding: 0 1.5rem 1.5rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.accordion-header.active + .accordion-content {
+    max-height: 1000px;
+}
+
+/* Responsive styles for FAQ section */
+@media (max-width: 768px) {
+    .faq {
+        padding: 3rem 1rem;
+    }
+
+    .accordion-header {
+        padding: 1.25rem;
+        font-size: 1rem;
+    }
+
+    .accordion-body {
+        padding: 0 1.25rem 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq {
+        padding: 2rem 1rem;
+    }
+
+    .accordion-header {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .accordion-body {
+        padding: 0 1rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .accordion-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--color-text);
+    color: var(--color-white);
+    padding: 4rem 0 2rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.footer-logo,
+.footer-links,
+.footer-social,
+.footer-newsletter {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-icons a {
+    color: var(--color-white);
+    font-size: 1.5rem;
+}
+
+.footer-newsletter form {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.footer-newsletter input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+}
+
+.footer-newsletter button {
+    border-radius: 0 5px 5px 0;
+}
+
+.footer-bottom {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+
+    .benefits-comparison {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+}
+
+/* Navbar Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    height: 6rem;
+}
+
+.navbar.scrolled {
+    padding: 0.5rem 0;
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo-highlight {
+    color: #4CAF50;
+}
+
+.nav-elements {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    position: relative;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 0.5rem 0;
+}
+
+.nav-link span {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #4CAF50;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover span {
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 100;
+}
+
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: #333;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.sub{
+
+    position: relative;
+    left: -14px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 968px) {
+    .nav-elements {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 400px;
+        background: white;
+        flex-direction: column;
+        padding: 5rem 2rem;
+        transition: right 0.3s ease;
+    }
+
+    .nav-elements.active {
+        right: 0;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .mobile-menu-btn.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .mobile-menu-btn.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-btn.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+}
+
+/* Animation for navbar on scroll */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.navbar.scroll-animation {
+    animation: slideDown 0.5s ease forwards;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-heading {
+        font-size: 2rem;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .steps {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .how-it-works h2 {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        gap: 3rem;
+    }
+
+    .step-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+    }
+
+    .step-description {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .how-it-works h2 {
+        font-size: 1.75rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .steps {
+        gap: 2.5rem;
+    }
+}
+
+/* Animation for steps on scroll */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.step:nth-child(1) { animation-delay: 0.2s; }
+.step:nth-child(2) { animation-delay: 0.4s; }
+.step:nth-child(3) { animation-delay: 0.6s; }
+.step:nth-child(4) { animation-delay: 0.8s; }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .benefits-comparison {
+        gap: 2rem;
+    }
+    
+    .benefit-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .benefit-card {
+        padding: 1rem;
+        width: 20rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .benefit-item {
+        padding: 0.8rem;
+    }
+
+    .benefit-content h4 {
+        font-size: 1rem;
+    }
+
+    .benefit-content p {
+        font-size: 0.85rem;
+    }
+}
+
+.testimonials h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* Simple Subscription Form */
+.subscription-form {
+    display: flex;
+    max-width: 400px;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.subscription-form input[type="email"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.subscription-form input[type="email"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .subscription-form {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+    
+    .subscription-form button {
+        width: 100%;
+    }
+}
+
+</style>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container nav-container">
+                <a href="#" class="logo">
+                    <span class="logo-text">Farm</span>
+                    <span class="logo-highlight">Hub</span>
+                </a>
+                
+                <div class="nav-elements">
+                    <ul class="nav-links">
+                        <li><a href="#features" class="nav-link"><span>Features</span></a></li>
+                        <li><a href="#how-it-works" class="nav-link"><span>How It Works</span></a></li>
+                        <li><a href="#benefits" class="nav-link"><span>Benefits</span></a></li>
+                        <li><a href="#testimonials" class="nav-link"><span>Testimonials</span></a></li>
+                        <li><a href="#faq" class="nav-link"><span>FAQ</span></a></li>
+                    </ul>
+                    
+                    <div class="nav-buttons">
+                        <a href="/loginpage" class="btn btn-outline">Login</a>
+                        <a href="/loginpage" class="btn btn-filled">Sign Up</a>
+                    </div>
+                </div>
+
+                <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="carousel">
+                <div class="carousel-slides">
+                    <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1920&q=80')"></div>
+                    <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80')"></div>
+                    <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?auto=format&fit=crop&w=1920&q=80')"></div>
+                    <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1920&q=80')"></div>
+                </div>
+            </div>
+            <div class="hero-content">
+                <div class="container">
+                    <h1>Connecting Farmers and Companies for Sustainable Growth</h1>
+                    <p>Streamlining contract farming with technology</p>
+                    <div class="cta-buttons">
+                        <a href="/loginpage" class="btn btn-gradient">Get Started</a>
+                        <a href="#" class="btn btn-outline">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-heading">Platform Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Guaranteed Buyers</h3>
+                        <p>Connect with reliable companies for your produce</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Fair Pricing</h3>
+                        <p>Transparent and competitive pricing for farmers</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-seedling"></i>
+                        <h3>Input Support</h3>
+                        <p>Access to quality seeds, fertilizers, and expertise</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-truck"></i>
+                        <h3>Reliable Supply Chain</h3>
+                        <p>Streamlined logistics for companies</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Quality Assurance</h3>
+                        <p>Maintain high standards throughout the process</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h3>Transparent Transactions</h3>
+                        <p>Clear and secure payment systems</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Analytics</h3>
+                        <p>Data-driven insights for better decisions</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Access</h3>
+                        <p>Manage operations on the go</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-headset"></i>
+                        <h3>24/7 Support</h3>
+                        <p>Always here to help you succeed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <h2>How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-user-plus"></i>
+                            <div class="step-number">1</div>
+                        </div>
+                        <h3 class="step-title">Create Account</h3>
+                        <p class="step-description">Sign up and complete your profile with relevant details about your farm or business</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-list-alt"></i>
+                            <div class="step-number">2</div>
+                        </div>
+                        <h3 class="step-title">List Products</h3>
+                        <p class="step-description">Add your agricultural products or browse available listings from verified farmers</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-handshake"></i>
+                            <div class="step-number">3</div>
+                        </div>
+                        <h3 class="step-title">Connect & Trade</h3>
+                        <p class="step-description">Match with potential buyers or sellers and negotiate terms directly</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="step-number">4</div>
+                        </div>
+                        <h3 class="step-title">Complete Deal</h3>
+                        <p class="step-description">Finalize transactions securely through our platform with guaranteed satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="benefits">
+            <div class="container">
+                <h2>Benefits for All</h2>
+                <div class="benefits-comparison">
+                    <div class="benefit-column farmer-benefits">
+                        <div class="benefit-card">
+                            <div class="card-header">
+                                <i class="fas fa-tractor"></i>
+                                <h3>For Farmers</h3>
+                            </div>
+                            <ul class="benefit-list">
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Market Access</h4>
+                                        <p>Connect directly with multiple buyers and expand your market reach</p>
+                                    </div>
+                                </li>
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Price Security</h4>
+                                        <p>Get guaranteed fair prices and secure contracts</p>
+                                    </div>
+                                </li>
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Input Assistance</h4>
+                                        <p>Access quality seeds, fertilizers, and modern farming tools</p>
+                                    </div>
+                                </li>
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Technical Support</h4>
+                                        <p>Receive expert guidance and training for better yields</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-column company-benefits">
+                        <div class="benefit-card">
+                            <div class="card-header">
+                                <i class="fas fa-building"></i>
+                                <h3>For Companies</h3>
+                            </div>
+                            <ul class="benefit-list">
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Consistent Supply</h4>
+                                        <p>Ensure steady supply chain with verified farmer network</p>
+                                    </div>
+                                </li>
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Quality Control</h4>
+                                        <p>Monitor and maintain product quality standards</p>
+                                    </div>
+                                </li>
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Data-Driven Insights</h4>
+                                        <p>Access real-time analytics and market trends</p>
+                                    </div>
+                                </li>
+                                <li class="benefit-item">
+                                    <i class="fas fa-check"></i>
+                                    <div class="benefit-content">
+                                        <h4>Streamlined Operations</h4>
+                                        <p>Automate processes and reduce operational costs</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2>Success Stories</h2>
+                <div class="testimonial-track">
+                    <div class="testimonial-slider">
+                        <!-- First Set -->
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1560343776-97e7d202ff0e?w=100&h=100&fit=crop" alt="Farmer John" class="testimonial-image">
+                            <p>"AgriConnect has transformed my farming business. I now have guaranteed buyers and fair prices for my crops."</p>
+                            <h4>John Smith</h4>
+                            <p class="testimonial-role">Corn Farmer</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" alt="Company CEO" class="testimonial-image">
+                            <p>"We've seen a 30% increase in supply chain efficiency since partnering with AgriConnect."</p>
+                            <h4>Sarah Johnson</h4>
+                            <p class="testimonial-role">CEO, FreshFoods Inc.</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1507103011901-e954d6ec0988?w=100&h=100&fit=crop" alt="Farmer Mike" class="testimonial-image">
+                            <p>"The technical support and market access have helped me double my farm's productivity."</p>
+                            <h4>Mike Anderson</h4>
+                            <p class="testimonial-role">Vegetable Farmer</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop" alt="Supply Manager" class="testimonial-image">
+                            <p>"The platform's analytics tools have revolutionized our supply chain management."</p>
+                            <h4>David Chen</h4>
+                            <p class="testimonial-role">Supply Manager, AgriTech Co.</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=100&h=100&fit=crop" alt="Organic Farmer" class="testimonial-image">
+                            <p>"The quality control features ensure my organic produce meets all certification standards."</p>
+                            <h4>Emma Wilson</h4>
+                            <p class="testimonial-role">Organic Farmer</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop" alt="Procurement Head" class="testimonial-image">
+                            <p>"Direct farmer connections have reduced our procurement costs by 25%."</p>
+                            <h4>Robert Taylor</h4>
+                            <p class="testimonial-role">Head of Procurement, FoodCo</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+
+                        <!-- Duplicate Set for Infinite Scroll -->
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1560343776-97e7d202ff0e?w=100&h=100&fit=crop" alt="Farmer John" class="testimonial-image">
+                            <p>"AgriConnect has transformed my farming business. I now have guaranteed buyers and fair prices for my crops."</p>
+                            <h4>John Smith</h4>
+                            <p class="testimonial-role">Corn Farmer</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" alt="Company CEO" class="testimonial-image">
+                            <p>"We've seen a 30% increase in supply chain efficiency since partnering with AgriConnect."</p>
+                            <h4>Sarah Johnson</h4>
+                            <p class="testimonial-role">CEO, FreshFoods Inc.</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="cta">
+            <div class="container">
+                <h2 class="animate-on-scroll fade-up">Join the Future of Contract Farming Today!</h2>
+                <div class="cta-content">
+                    <div class="cta-buttons animate-on-scroll fade-up" style="--delay: 0.2s">
+                        <a href="#" class="btn btn-filled btn-icon">
+                            <i class="fas fa-tractor"></i>
+                            <span>Sign Up as Farmer</span>
+                        </a>
+                        <a href="#" class="btn btn-outline btn-icon">
+                            <i class="fas fa-building"></i>
+                            <span>Sign Up as Company</span>
+                        </a>
+                    </div>
+                    
+                    <div class="separator animate-on-scroll fade-up" style="--delay: 0.3s">
+                        <span>or</span>
+                    </div>
+
+                    <form class="subscription-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-filled">Subscribe</button>
+                    </form>
+                </div>
+                
+                <div class="trust-indicators animate-on-scroll fade-up" style="--delay: 0.5s">
+                    <div class="trust-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure Platform</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-clock"></i>
+                        <span>24/7 Support</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-users"></i>
+                        <span>10k+ Users</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>How does the platform ensure fair pricing?</span>
+                            <div class="accordion-icon"></div>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Our platform uses market data and transparent negotiations to ensure fair pricing for both farmers and companies. We also implement a price floor to protect farmers from market volatility.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>What support is available for farmers?</span>
+                            <div class="accordion-icon"></div>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Farmers receive technical support, access to quality inputs, and guidance on best practices. Our team of agricultural experts is always available to assist with any queries or challenges.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>How does AgriConnect ensure quality control?</span>
+                            <div class="accordion-icon"></div>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>We implement strict quality standards and regular inspections throughout the growing process. Our platform also provides tools for companies to track and verify product quality at every stage.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#">AgriConnect</a>
+                    <p>Connecting Farmers and Companies for Sustainable Growth</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <form>
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-3d"><span class="sub">Subscribe</span></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AgriConnect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script >
+        document.addEventListener("DOMContentLoaded", () => {
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector(".mobile-menu-btn")
+    const navElements = document.querySelector(".nav-elements")
+    const navLinks = document.querySelectorAll(".nav-link")
+  
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileMenuBtn.classList.toggle("active")
+      navElements.classList.toggle("active")
+    })
+  
+    // Close mobile menu when clicking a link
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenuBtn.classList.remove("active")
+        navElements.classList.remove("active")
+      })
+    })
+  
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault()
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+          behavior: "smooth",
+        })
+      })
+    })
+  
+    // Enhanced FAQ accordion with smooth animations
+    const accordionItems = document.querySelectorAll(".accordion-item")
+  
+    accordionItems.forEach((item) => {
+      const header = item.querySelector(".accordion-header")
+      const content = item.querySelector(".accordion-content")
+  
+      header.addEventListener("click", () => {
+        // Close all other accordion items
+        accordionItems.forEach((otherItem) => {
+          if (otherItem !== item) {
+            otherItem.querySelector(".accordion-header").classList.remove("active")
+            otherItem.querySelector(".accordion-content").style.maxHeight = "0"
+          }
+        })
+        
+        // Toggle current accordion item
+        header.classList.toggle("active")
+        
+        if (header.classList.contains("active")) {
+          content.style.maxHeight = content.scrollHeight + "px"
+        } else {
+          content.style.maxHeight = "0"
+        }
+      })
+    })
+  
+    // Testimonial slider
+    const testimonialSlider = document.querySelector(".testimonial-slider")
+    let isDown = false
+    let startX
+    let scrollLeft
+  
+    testimonialSlider.addEventListener("mousedown", (e) => {
+      isDown = true
+      startX = e.pageX - testimonialSlider.offsetLeft
+      scrollLeft = testimonialSlider.scrollLeft
+    })
+  
+    testimonialSlider.addEventListener("mouseleave", () => {
+      isDown = false
+    })
+  
+    testimonialSlider.addEventListener("mouseup", () => {
+      isDown = false
+    })
+  
+    testimonialSlider.addEventListener("mousemove", (e) => {
+      if (!isDown) return
+      e.preventDefault()
+      const x = e.pageX - testimonialSlider.offsetLeft
+      const walk = (x - startX) * 2
+      testimonialSlider.scrollLeft = scrollLeft - walk
+    })
+  
+    // Form submission (you can customize this part based on your backend)
+    const demoForm = document.querySelector(".demo-form")
+    const newsletterForm = document.querySelector(".footer-newsletter form")
+  
+    demoForm.addEventListener("submit", (e) => {
+      e.preventDefault()
+      alert("Thank you for your interest! We will contact you soon.")
+      demoForm.reset()
+    })
+  
+    newsletterForm.addEventListener("submit", (e) => {
+      e.preventDefault()
+      alert("Thank you for subscribing to our newsletter!")
+      newsletterForm.reset()
+    })
+  
+    // Navbar scroll effect
+    const navbar = document.querySelector(".navbar")
+    let lastScroll = 0
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.pageYOffset
+  
+      // Add/remove scrolled class for style changes
+      if (currentScroll > 50) {
+        navbar.classList.add("scrolled")
+      } else {
+        navbar.classList.remove("scrolled")
+      }
+  
+      // Hide/show navbar on scroll
+      if (currentScroll > lastScroll && currentScroll > 100) {
+        navbar.style.transform = "translateY(-100%)"
+      } else {
+        navbar.style.transform = "translateY(0)"
+        navbar.classList.add("scroll-animation")
+      }
+  
+      lastScroll = currentScroll
+    })
+  
+    // Clone testimonials for smooth infinite scroll
+    function duplicateTestimonials() {
+        const testimonials = document.querySelectorAll('.testimonial');
+        testimonials.forEach(testimonial => {
+            const clone = testimonial.cloneNode(true);
+            testimonialSlider.appendChild(clone);
+        });
+    }
+    
+    // Call the function to duplicate testimonials
+    duplicateTestimonials();
+
+    // Reset animation when it ends
+    testimonialSlider.addEventListener('animationend', () => {
+        testimonialSlider.style.animation = 'none';
+        testimonialSlider.offsetHeight; // Trigger reflow
+        testimonialSlider.style.animation = null;
+    });
+
+    // Pause animation on mouse hover
+    testimonialSlider.addEventListener('mouseenter', () => {
+        testimonialSlider.style.animationPlayState = 'paused';
+    });
+
+    testimonialSlider.addEventListener('mouseleave', () => {
+        testimonialSlider.style.animationPlayState = 'running';
+    });
+
+    // Touch events for mobile devices
+    let touchStart = null;
+    let touchEnd = null;
+
+    testimonialSlider.addEventListener('touchstart', (e) => {
+        touchStart = e.touches[0].clientX;
+        testimonialSlider.style.animationPlayState = 'paused';
+    });
+
+    testimonialSlider.addEventListener('touchend', (e) => {
+        touchEnd = e.changedTouches[0].clientX;
+        testimonialSlider.style.animationPlayState = 'running';
+    });
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.visibility = 'visible';
+                entry.target.style.animationDelay = entry.target.dataset.delay || '0s';
+                entry.target.classList.add('fade-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(elem => {
+        elem.style.visibility = 'hidden';
+        observer.observe(elem);
+    });
+
+    const carouselTrack = document.querySelector('.carousel-track');
+    
+    carouselTrack.addEventListener('mouseenter', () => {
+        carouselTrack.style.animationPlayState = 'paused';
+    });
+    
+    carouselTrack.addEventListener('mouseleave', () => {
+        carouselTrack.style.animationPlayState = 'running';
+    });
+    
+    // Touch events for mobile
+    carouselTrack.addEventListener('touchstart', () => {
+        carouselTrack.style.animationPlayState = 'paused';
+    });
+    
+    carouselTrack.addEventListener('touchend', () => {
+        carouselTrack.style.animationPlayState = 'running';
+    });
+
+    // Image slideshow functionality
+    const slides = document.querySelectorAll('.carousel-slide');
+    let currentSlide = 0;
+    const slideInterval = 6000; // Change slide every 6 seconds
+
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    // Start the slideshow
+    setInterval(nextSlide, slideInterval);
+})
+  
+  
+    </script>
+</body>
+</html>
