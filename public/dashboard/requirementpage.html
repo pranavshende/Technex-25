@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Contract</title>
     <style>
         /* Reset basic styles */
@@ -17,14 +18,14 @@
             padding: 20px;
         }
 
-        h1 {
+        h1, h2 {
             text-align: center;
             margin-bottom: 20px;
             color: #333;
         }
 
         form {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background: #fff;
             padding: 20px;
@@ -41,6 +42,8 @@
 
         input[type="text"],
         input[type="number"],
+        input[type="date"],
+        select,
         textarea {
             width: 100%;
             padding: 10px;
@@ -51,11 +54,14 @@
             color: #333;
         }
 
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        textarea:focus {
+        input:focus, textarea:focus, select:focus {
             border-color: #007bff;
             outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
         }
 
         button[type="submit"] {
@@ -77,38 +83,68 @@
         button[type="submit"]:active {
             background-color: #1e7e34;
         }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
     </style>
 </head>
 <body>
     <h1>Create a New Contract</h1>
     <form action="/create-contract" method="POST">
+        <!-- Parties Involved -->
+        <h2>Create Requirement</h2>
         <label for="firmName">Firm Name:</label>
         <input type="text" id="firmName" name="firmName" required>
 
+        <label for="company_address">Company Address:</label>
+        <textarea id="company_address" name="company_address" required></textarea>
+
+        <!-- Purpose of the Agreement -->
+        <h2>2. Purpose of the Agreement</h2>
         <label for="cropType">Type of Crop Required:</label>
         <input type="text" id="cropType" name="cropType" required>
 
         <label for="cropQuality">Crop Quality:</label>
         <input type="text" id="cropQuality" name="cropQuality" required>
 
-        <label for="timePeriod">Time Period:</label>
-        <input type="text" id="timePeriod" name="timePeriod" required>
+        <!-- Contract Type -->
+        <h2>3. Contract Type</h2>
+        <label for="contract_type">Select Contract Type:</label>
+        <select id="contract_type" name="contract_type" required>
+            <option value="Market Specified">Market Specified</option>
+            <option value="Resource Provided">Resource Provided</option>
+            <option value="Production Support">Production Support</option>
+            <option value="Comprehensive">Comprehensive</option>
+        </select>
 
-        <label for="amountOfCrop">Amount of Crop:</label>
+        <!-- Duration -->
+        <h2>4. Duration</h2>
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required>
+
+        <label for="timePeriod">total Duration</label>
+        <input type="text" id="timePeriod" name="timePeriod" required>
+        <!-- Crop Details -->
+        <h2>5. Crop Details</h2>
+        <label for="amountOfCrop">Amount of Crop (Units):</label>
         <input type="number" id="amountOfCrop" name="amountOfCrop" required>
 
-        <label for="amount">Price :</label>
-        <input type="number" id="amount" name="amount" required>
+        <label for="price_per_unit">Price per Unit:</label>
+        <input type="number" id="price_per_unit" name="price_per_unit" step="0.01" required>
 
-        <label for="additionalInfo">Additional Information:</label>
-        <textarea id="additionalInfo" name="additionalInfo"></textarea>
+        <!-- Payment and Quality Standards -->
+        <h2>6. Payment and Quality Standards</h2>
+        <label for="total_payment">Total Estimated Payment:</label>
+        <input type="number" id="amount" name="amount" step="0.01" required>
 
-        <button type="submit">Create Contract</button>
+        <label for="payment_schedule">Payment Schedule:</label>
+        <textarea id="payment_schedule" name="payment_schedule" required></textarea>
+
+        <label for="quality_standards">Quality Standards:</label>
+        <textarea id="quality_standards" name="quality_standards" required></textarea>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Contract</button>
     </form>
 </body>
 </html>

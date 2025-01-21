@@ -21,7 +21,7 @@ const {
 const { fetchUserRole, authorize } = require('./middlewares/loginMiddleware');
 
 const app = express();
-
+const mainContract = require('./models/mainContract');
 // Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -243,15 +243,35 @@ app.post('/submit-farmer-registration', async (req, res) => {
 });
 
 app.post('/create-contract', async (req, res) => {
-    const { firmName, cropType, cropQuality, timePeriod, amountOfCrop, additionalInfo ,amount } = req.body;
+    const { firmName,
+        company_address,
+        cropType,
+        cropQuality,
+        contract_type,
+        start_date,
+        end_date,
+        price_per_unit,
+        timePeriod,
+        payment_schedule,
+        amountOfCrop,
+        amount,
+        quality_standards,
+        additionalInfo} = req.body;
 
     const newContract = new Contract({
         firmName,
+        company_address,
         cropType,
         cropQuality,
+        contract_type,
+        start_date,
+        end_date,
+        price_per_unit,
         timePeriod,
+        payment_schedule,
         amountOfCrop,
         amount,
+        quality_standards,
         additionalInfo
     });
 
@@ -312,6 +332,118 @@ app.get('/api/contracts', async (req, res) => {
         res.status(500).send('Error fetching applications.');
     }
 });
+app.get('/data', async (req, res) => {
+    try {
+      const data = await mainContract.find(); // Fetch all documents from the collection
+      res.json(data); // Send data as JSON response
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving data' });
+    }
+  });
+  
+
+app.post('/applyContract', async (req, res) => {
+    try {
+        // Destructure the incoming request body
+        const {
+            date, month, year,
+            farmerName, farmerAddress, farmerContact, farmerId,
+            companyName, companyAddress, companyContact, companyId,
+            crops, price, advance, advanceDate, finalPaymentDays,
+            farmerSignName, farmerSignDate, companySignName, companySignDesignation, companySignDate
+        } = req.body;
+
+        // Validate required fields (simple validation as an example)
+        if (
+            !date || !month || !year ||
+            !farmerName || !farmerAddress || !farmerContact || !farmerId ||
+            !companyName || !companyAddress || !companyContact || !companyId ||
+            !crops || !price || !advance || !advanceDate || !finalPaymentDays ||
+            !farmerSignName || !farmerSignDate || !companySignName || !companySignDesignation || !companySignDate
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: 'Missing required fields. Please ensure all fields are provided.'
+            });
+        }
+
+        // Create a new contract instance
+        const newContract = new mainContract({
+            date,
+            month,
+            year,
+            farmer: {
+                name: farmerName,
+                address: farmerAddress,
+                contact: farmerContact,
+                id: farmerId
+            },
+            company: {
+                name: companyName,
+                address: companyAddress,
+                contact: companyContact,
+                id: companyId
+            },
+            crops,
+            price,
+            payment: {
+                advance,
+                advanceDate,
+                finalPaymentDays
+            },
+            signatures: {
+                farmerName: farmerSignName,
+                farmerSignDate,
+                companyName: companySignName,
+                companySignDesignation,
+                companySignDate
+            }
+        });
+
+        // Attempt to save the contract in the database
+        const savedContract = await newContract.save();
+
+        // Return a success response with the saved contract details
+        return res.status(201).json({
+            success: true,
+            message: 'Contract saved successfully!',
+            data: savedContract
+        });
+    } catch (err) {
+        console.error('Error saving contract:', err);
+
+        // Handle validation errors
+        if (err.name === 'ValidationError') {
+            return res.status(422).json({
+                success: false,
+                message: 'Validation failed. Please check the submitted data.',
+                error: err.errors
+            });
+        }
+
+        // Handle database connection or save errors
+        if (err.name === 'MongoError' || err.name === 'MongooseError') {
+            return res.status(503).json({
+                success: false,
+                message: 'Database error. Please try again later.',
+                error: err.message
+            });
+        }
+
+        // Generic error handler
+        return res.status(500).json({
+            success: false,
+            message: 'An unexpected error occurred while saving the contract.',
+            error: err.message
+        });
+    }
+});
+
+
+app.get('/confirmedcontract',(req,res)=>{
+    res.sendFile(path.join(__dirname , '../public/dashboard/confirmedContract.html'));
+});
+
 app.get('/companydashboard2',(req,res)=>{
     res.sendFile(path.join(__dirname , '../public/dashboard/company/companyprofile2.html'));
 });

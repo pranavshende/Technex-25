@@ -654,6 +654,7 @@ body {
             <i class="fas fa-users"></i>
             <span>Received Applications</span>
         </a>
+        
         <a onclick="showProject('payment')" class="nav-item">
             <i class="fas fa-money-bill-wave"></i>
             <span>Payments</span>
@@ -663,7 +664,7 @@ body {
             <i class="fas fa-truck"></i>
             <span>Delivery</span>
         </a>
-        <a onclick="showProject('report')" class="nav-item">
+        <a href="/confirmedcontract" class="nav-item">
             <i class="fas fa-chart-bar"></i>
             <span>Reports</span>
         </a>
@@ -1266,5 +1267,63 @@ body {
       }
     }
     </script>
+     <script>
+        // Fetch data from the backend
+        fetch('http://localhost:3000/data')
+          .then(response => response.json())
+          .then(data => {
+            const tableHeader = document.querySelector('#table-header');
+            const tableBody = document.querySelector('#table-body');
+            const loadingIndicator = document.getElementById('loading');
+    
+            // Hide loading message
+            loadingIndicator.style.display = 'none';
+    
+            // Check if there is any data
+            if (data.length === 0) {
+              tableBody.innerHTML = '<tr><td colspan="100%">No data available</td></tr>';
+              return;
+            }
+    
+            // Flatten the nested fields and dynamically set the table header based on the keys of the first object in the data
+            const columns = Object.keys(data[0]).concat(
+              ['farmer', 'company', 'payment', 'signatures'].reduce((result, parentKey) => {
+                // If parent key exists, we check its children
+                if (data[0][parentKey]) {
+                  Object.keys(data[0][parentKey]).forEach(childKey => {
+                    result.push(`${parentKey}.${childKey}`);
+                  });
+                }
+                return result;
+              }, [])
+            );
+    
+            // Create table headers dynamically
+            columns.forEach(col => {
+              const th = document.createElement('th');
+              th.textContent = col.split('.').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); // Capitalize first letter of each word
+              tableHeader.appendChild(th);
+            });
+    
+            // Populate the table body with dynamic rows
+            data.forEach(item => {
+              const row = document.createElement('tr');
+              columns.forEach(col => {
+                const td = document.createElement('td');
+                const value = col.split('.').reduce((acc, key) => acc && acc[key], item); // Handle nested objects
+                td.textContent = value ? value : 'N/A'; // Handle null or undefined values
+                row.appendChild(td);
+              });
+              tableBody.appendChild(row);
+            });
+          })
+          .catch(error => {
+            const loadingIndicator = document.getElementById('loading');
+            loadingIndicator.style.display = 'none';  // Hide loading
+            const tableBody = document.querySelector('#table-body');
+            tableBody.innerHTML = '<tr><td colspan="100%">Error loading data</td></tr>';
+            console.error('Error fetching data:', error);
+          });
+      </script>
 </body>
 </html>

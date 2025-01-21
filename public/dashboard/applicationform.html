@@ -74,7 +74,7 @@
             <h1>Contract Farming Agreement</h1>
         </div>
 
-        <form action="/apply" method="POST" id="contractForm" class="mt-4">
+        <form action="/applyContract" method="POST" id="contractForm" class="mt-4">
             <p>This Contract Farming Agreement ("Agreement") is entered into on this
                 <input type="text" name="date" placeholder="DD" class="form-control d-inline w-auto"> day of
                 <input type="text" name="month" placeholder="MM" class="form-control d-inline w-auto">,
@@ -145,7 +145,8 @@
                 </div>
             </div>
 
-            <button type="button" id="generateContract" class="btn btn-primary mt-3">Generate Contract</button>
+            <!-- Submit Contract Button -->
+            <button type="submit" class="btn btn-success mt-3" id="submitContract">Submit Contract</button>
         </form>
 
         <div id="generatedContract" class="mt-5 d-none">
@@ -180,5 +181,7 @@
             document.getElementById('contractContent').innerHTML = contractText;
         });
     </script>
+</body>
+
 </body>
 </html>
