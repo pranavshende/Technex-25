@@ -232,15 +232,14 @@ app.post('/submit-farmer-registration', async (req, res) => {
             storageFacilities
         );
 
-        return res.json({
-            success: true,
-            message: 'Farmer registration submitted successfully!',
-        });
+        // Redirect to the login page after successful submission
+        return res.redirect('/loginpage');
     } catch (error) {
         console.error('Error submitting farmer registration:', error);
         return res.status(500).json({ success: false, message: 'Server error while submitting the registration' });
     }
 });
+
 
 app.post('/create-contract', async (req, res) => {
     const { firmName,
@@ -455,7 +454,7 @@ app.get('/logo-photo',(req,res)=>{
     res.sendFile(path.join(__dirname , '../public/dashboard/farmhub.jpg'));
 });
 app.get('/account-photo',(req,res)=>{
-    res.sendFile(path.join(__dirname , '../public/dashboard/account.png'));
+    res.sendFile(path.join(__dirname , '../public/dashboard/account2.jpg'));
 });
 
 app.get('/contractterms',(req,res)=>{
